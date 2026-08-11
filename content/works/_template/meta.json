@@ -1,0 +1,11 @@
+{
+  "slug": "_template",
+  "title": {
+    "ko": "작업명 (한글)",
+    "en": "Work Title (English)"
+  },
+  "year": 2026,
+  "category": ["design"],
+  "cover": "media/01_cover.jpg",
+  "order": 0
+}

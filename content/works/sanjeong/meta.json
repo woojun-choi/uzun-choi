@@ -1,0 +1,11 @@
+{
+  "slug": "sanjeong",
+  "title": {
+    "ko": "산정",
+    "en": "Sanjeong"
+  },
+  "year": 2026,
+  "category": ["photo"],
+  "cover": "media/01_cover.png",
+  "order": 1
+}
