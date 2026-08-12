@@ -61,7 +61,13 @@ export default function MenuOverlay({
                 <p className="text-[0.83333vw] font-bold uppercase text-white whitespace-nowrap">
                   Always, refine, still
                 </p>
-                <a href="#" aria-label="Instagram" className="flex size-[1.30208vw] items-center justify-center">
+                <a
+                  href="https://www.instagram.com/uzunchoi/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="flex size-[1.30208vw] items-center justify-center"
+                >
                   <Image src="/assets/icons/ig.svg" alt="" width={16} height={16} />
                 </a>
               </div>
