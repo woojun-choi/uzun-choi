@@ -1,0 +1,11 @@
+{
+  "slug": "dummy-12",
+  "title": {
+    "ko": "여백",
+    "en": "여백"
+  },
+  "year": 2026,
+  "category": ["photo"],
+  "cover": "media/01_cover.jpg",
+  "order": 13
+}

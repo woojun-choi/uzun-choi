@@ -1,0 +1,11 @@
+{
+  "slug": "dummy-08",
+  "title": {
+    "ko": "고요한 오후",
+    "en": "고요한 오후"
+  },
+  "year": 2026,
+  "category": ["photo"],
+  "cover": "media/01_cover.jpg",
+  "order": 9
+}

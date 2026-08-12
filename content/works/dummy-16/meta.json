@@ -1,0 +1,11 @@
+{
+  "slug": "dummy-16",
+  "title": {
+    "ko": "웹 랜딩",
+    "en": "웹 랜딩"
+  },
+  "year": 2026,
+  "category": ["dev"],
+  "cover": "media/01_cover.jpg",
+  "order": 17
+}

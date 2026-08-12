@@ -1,0 +1,11 @@
+{
+  "slug": "dummy-15",
+  "title": {
+    "ko": "포스터 시안",
+    "en": "포스터 시안"
+  },
+  "year": 2026,
+  "category": ["design"],
+  "cover": "media/01_cover.jpg",
+  "order": 16
+}

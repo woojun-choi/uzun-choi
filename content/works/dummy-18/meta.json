@@ -1,0 +1,11 @@
+{
+  "slug": "dummy-18",
+  "title": {
+    "ko": "짧은 필름",
+    "en": "짧은 필름"
+  },
+  "year": 2026,
+  "category": ["film"],
+  "cover": "media/01_cover.jpg",
+  "order": 19
+}

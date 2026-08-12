@@ -1,0 +1,11 @@
+{
+  "slug": "dummy-14",
+  "title": {
+    "ko": "브랜드 촬영",
+    "en": "브랜드 촬영"
+  },
+  "year": 2026,
+  "category": ["photo","design"],
+  "cover": "media/01_cover.jpg",
+  "order": 15
+}

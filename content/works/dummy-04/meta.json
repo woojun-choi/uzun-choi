@@ -1,0 +1,11 @@
+{
+  "slug": "dummy-04",
+  "title": {
+    "ko": "실내 정물",
+    "en": "실내 정물"
+  },
+  "year": 2026,
+  "category": ["photo"],
+  "cover": "media/01_cover.jpg",
+  "order": 5
+}
