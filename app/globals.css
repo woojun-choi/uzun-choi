@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "NEXON Lv2 Gothic";
+  src: url("/fonts/NEXONLv2Gothic-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NEXON Lv2 Gothic";
+  src: url("/fonts/NEXONLv2Gothic-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NEXON Lv2 Gothic";
+  src: url("/fonts/NEXONLv2Gothic-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #0c0c0c;
   --foreground: #ffffff;

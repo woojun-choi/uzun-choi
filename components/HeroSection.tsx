@@ -31,7 +31,12 @@ function Slide({ item, index }: { item: HeroSlide; index: number }) {
       )}
       <div className="absolute bottom-[4.01042vw] left-[4.42708vw] z-10 flex items-start gap-[0.41667vw] text-white">
         <p className="font-bold text-[5.20833vw] leading-none">{item.title}</p>
-        <p className="text-[1.5625vw] leading-none">{item.year}</p>
+        <p
+          className="text-[1.5625vw] leading-none"
+          style={{ fontFamily: '"NEXON Lv2 Gothic"', fontWeight: 400 }}
+        >
+          {item.year}
+        </p>
       </div>
     </section>
   );
