@@ -25,8 +25,8 @@ export default function MenuOverlay({
       }`}
       aria-hidden={!open}
     >
-      <div className="flex h-full max-h-screen flex-col overflow-y-auto pt-[9.89583vw]">
-        <nav className="flex flex-1 flex-col items-end justify-center gap-[0.78125vw] px-[4.42708vw] py-[2.08333vw]">
+      <div className="flex h-full max-h-screen flex-col overflow-y-auto pt-[6.770833vw]">
+        <nav className="flex flex-1 flex-col items-end gap-[0.78125vw] px-[4.42708vw] pt-0 pb-[2.08333vw]">
           {NAV_ITEMS.map((item, i) => (
             <Link
               key={item.href}
@@ -50,17 +50,9 @@ export default function MenuOverlay({
         </nav>
 
         <div className="flex shrink-0 flex-col items-end gap-[3.64583vw] px-[4.42708vw] pb-[4.01042vw]">
-          <div className="flex items-center gap-[0.52083vw] text-[1.5625vw] font-bold">
-            <button type="button" className="text-white">EN</button>
-            <button type="button" className="text-[#7c7c7c]">KR</button>
-          </div>
-
-          <div className="flex w-[15.20833vw] flex-col items-end gap-[0.625vw]">
-            <div className="flex w-full flex-col items-end">
-              <div className="flex items-center gap-[0.26042vw]">
-                <p className="text-[0.83333vw] font-bold uppercase text-white whitespace-nowrap">
-                  Always, refine, still
-                </p>
+          <div className="flex w-[15.20833vw] flex-col items-end gap-[0.833333vw]">
+            <div className="flex w-full flex-col items-end gap-[0.520833vw]">
+              <div className="flex items-center gap-[0.520833vw]">
                 <a
                   href="https://www.instagram.com/uzunchoi/"
                   target="_blank"
@@ -70,6 +62,9 @@ export default function MenuOverlay({
                 >
                   <Image src="/assets/icons/ig.svg" alt="" width={16} height={16} />
                 </a>
+                <p className="text-[0.83333vw] font-bold uppercase text-white whitespace-nowrap">
+                  Always, refine, still
+                </p>
               </div>
               <div className="flex items-center gap-[0.625vw] px-[0.20833vw]">
                 {WORK_TAGS.map((tag, i) => (
@@ -88,7 +83,7 @@ export default function MenuOverlay({
                 ))}
               </div>
             </div>
-            <p className="w-full text-right text-[0.625vw] text-white">
+            <p className="w-full text-right text-[0.703125vw] text-white">
               © 2026 UZUN. All rights reserved.
             </p>
           </div>
