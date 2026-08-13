@@ -44,7 +44,7 @@ export default function WorksGrid({
           {filtered.map((work) => (
             <div
               key={work.slug}
-              className="relative aspect-[284.4/457.5] w-full overflow-hidden bg-white/5"
+              className="group relative aspect-[284.4/457.5] w-full overflow-hidden bg-white/5 transition-transform duration-300 ease-out hover:scale-[0.94]"
             >
               <Image
                 src={work.coverUrl}
@@ -52,6 +52,14 @@ export default function WorksGrid({
                 fill
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-black/45 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <p className="absolute top-[1.04167vw] right-[1.04167vw] text-[0.84375vw] text-white/70">
+                  {work.year}
+                </p>
+                <p className="absolute bottom-[0.625vw] left-[1.04167vw] text-[1.458333vw] font-[850] text-white">
+                  {work.title.ko}
+                </p>
+              </div>
             </div>
           ))}
           {filtered.length === 0 && (
