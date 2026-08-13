@@ -17,6 +17,9 @@ const HERO_WORDS: ReactNode[] = [
   "DEVELOPER",
   "STORYTELLER",
   "VISIONARY",
+  "ALWAYS",
+  "REFINE",
+  "STILL",
 ];
 
 const CATEGORIES = [
@@ -45,14 +48,14 @@ const CV_ENTRIES = [
   {
     year: "2024 -",
     yearWidthVw: 4.47917,
-    gapVw: 0.9375,
+    gapVw: 0.416667,
     title: "Chung-Ang University, Photography (Double Major)",
     subtitle: "중앙대학교, 사진학과 복수전공",
   },
   {
     year: "2025",
     yearWidthVw: 3.48958,
-    gapVw: 2.03125,
+    gapVw: 1.40625,
     title: "Design Agency Internship",
     subtitle: "디자인 에이전시 인턴십",
   },
@@ -66,7 +69,7 @@ export default function AboutSection() {
   return (
     <main className="bg-[#0c0c0c] text-white">
       <div
-        className="flex h-screen items-center justify-center text-center text-[7.8125vw] leading-none whitespace-nowrap"
+        className="flex h-screen items-center justify-center text-center text-[6.51042vw] leading-none whitespace-nowrap"
         style={{ fontFamily: '"itc-bradley-hand-std", sans-serif', fontWeight: 600, fontStyle: "normal" }}
       >
         <RotatingWord words={HERO_WORDS} />
