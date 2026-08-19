@@ -1,0 +1,1 @@
+Issue No.17 of Magazine A, a personal magazine project conceived from scratch. Brings together a profile and interview of a working artist, an interview with a fellow collaborator, and a self-interview and portfolio introduction, all in one volume. Handled the cover, page layout, photography, and design end to end.

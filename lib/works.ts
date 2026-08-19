@@ -3,7 +3,7 @@ import path from "node:path";
 
 const WORKS_DIR = path.join(process.cwd(), "content", "works");
 
-export type WorkCategory = "photo" | "film" | "design" | "dev";
+export type WorkCategory = "photo" | "film" | "design" | "editorial" | "dev";
 
 export type WorkMeta = {
   slug: string;
@@ -11,6 +11,7 @@ export type WorkMeta = {
   year: number;
   category: WorkCategory[];
   cover: string;
+  heroCover?: string;
   order: number;
 };
 
@@ -32,4 +33,8 @@ export function getAllWorks(): WorkMeta[] {
 
 export function workCoverUrl(work: WorkMeta) {
   return `/works-media/${work.slug}/${work.cover}`;
+}
+
+export function workHeroCoverUrl(work: WorkMeta) {
+  return `/works-media/${work.slug}/${work.heroCover ?? work.cover}`;
 }

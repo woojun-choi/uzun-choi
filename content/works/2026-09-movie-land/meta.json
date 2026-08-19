@@ -1,0 +1,13 @@
+{
+  "slug": "2026-09-movie-land",
+  "title": {
+    "ko": "Movie Land",
+    "en": "Movie Land"
+  },
+  "year": 2026,
+  "category": [
+    "photo"
+  ],
+  "cover": "media/01_SHOP-1.jpg",
+  "order": 8
+}

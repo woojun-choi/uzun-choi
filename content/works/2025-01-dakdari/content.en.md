@@ -1,0 +1,1 @@
+A short film built around the use of lighting. Centered on the question "who ate the chicken leg?", it follows a group of friends whose emotions escalate in an interrogation-room-like setting. Directed the piece, handling concept, cinematography, and lighting.

@@ -1,0 +1,1 @@
+Logo redesign for FC COANT, the football/futsal club of Chung-Ang University's College of Art & Technology. Built around the dragon that symbolizes Chung-Ang University and the CAU initials, using the yellow the club has carried since its founding. Designed the entire logo independently.

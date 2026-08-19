@@ -1,0 +1,1 @@
+Built a camera obscura (pinhole camera) using an iPhone, then shot a series of photographs with it and staged an exhibition of the results. Handled the entire process — building the camera, shooting, curating the outcome, and installing the show.

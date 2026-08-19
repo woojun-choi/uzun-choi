@@ -1,5 +1,5 @@
 import HeroSection, { type HeroSlide } from "@/components/HeroSection";
-import { getAllWorks, workCoverUrl } from "@/lib/works";
+import { getAllWorks, workHeroCoverUrl } from "@/lib/works";
 
 const HERO_SLOT_COUNT = 5;
 
@@ -10,7 +10,7 @@ export default function Home() {
     id: work.slug,
     title: work.title.ko,
     year: work.year,
-    cover: workCoverUrl(work),
+    cover: workHeroCoverUrl(work),
   }));
 
   const dummySlides: HeroSlide[] = Array.from(

@@ -9,6 +9,7 @@ const TAGS: { label: string; value: WorkCategory | "ALL" }[] = [
   { label: "PHOTO", value: "photo" },
   { label: "FILM", value: "film" },
   { label: "DESIGN", value: "design" },
+  { label: "EDITORIAL", value: "editorial" },
   { label: "DEV", value: "dev" },
 ];
 

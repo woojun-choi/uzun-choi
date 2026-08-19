@@ -19,8 +19,9 @@ kebab-case. 정렬 편의를 위해 연도 prefix 권장: `2026-nightscape-portr
 | `slug` | string | 폴더명과 동일하게 유지 |
 | `title.ko` / `title.en` | string | 작업명 (한/영) |
 | `year` | number | 작업 연도 |
-| `category` | string[] | `photo` \| `film` \| `design` \| `dev` 중 1~2개 |
-| `cover` | string | 대표 썸네일 경로 (`media/` 기준 상대경로) |
+| `category` | string[] | `photo` \| `film` \| `design` \| `editorial` \| `dev` 중 1~2개 |
+| `cover` | string | Works 그리드 대표 썸네일 경로 (`media/` 기준 상대경로) |
+| `heroCover` | string | 홈 히어로 캐러셀 전용 대표 이미지 경로 (옵션, 없으면 `cover` 사용) |
 | `order` | number | Works 그리드 정렬 우선순위 (낮을수록 먼저, 옵션) |
 
 ## media/

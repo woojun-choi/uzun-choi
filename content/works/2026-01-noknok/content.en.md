@@ -1,0 +1,1 @@
+UI design for "Noknok," a symptom-tracking app for elderly users, built at the ASCII-THON hackathon. Users log and track pain and symptoms over time, so the record can support a doctor's diagnosis at their next hospital visit. Led the overall design.

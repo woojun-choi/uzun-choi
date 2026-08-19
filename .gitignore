@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw source dump for content/works (organized copies live in content/works/<slug>/)
+/content/works/input_contents/
