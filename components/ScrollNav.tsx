@@ -6,14 +6,21 @@ export default function ScrollNav({
   total,
   onUp,
   onDown,
+  className = "fixed bottom-[4.67923vw] right-[3.48958vw] z-30",
+  disabled = false,
 }: {
   current: number;
   total: number;
   onUp?: () => void;
   onDown?: () => void;
+  className?: string;
+  disabled?: boolean;
 }) {
   return (
-    <div className="fixed bottom-[4.67923vw] right-[3.48958vw] z-30 flex items-center gap-[1px] text-white">
+    <div
+      className={`flex items-center gap-[1px] text-white ${className}`}
+      style={{ opacity: disabled ? 0.3 : 1 }}
+    >
       <div className="flex w-[2.08333vw] flex-col items-center font-normal">
         <RollingNumber value={current} />
         <div className="flex h-[2.5vw] w-full items-center justify-center">
@@ -25,6 +32,7 @@ export default function ScrollNav({
         <button
           type="button"
           onClick={onUp}
+          disabled={disabled}
           aria-label="Previous"
           className="group flex size-[2.5vw] items-center justify-center border border-[#f3f3f3] outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
         >
@@ -38,6 +46,7 @@ export default function ScrollNav({
         <button
           type="button"
           onClick={onDown}
+          disabled={disabled}
           aria-label="Next"
           className="group flex size-[2.5vw] items-center justify-center border border-[#f3f3f3] outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
         >

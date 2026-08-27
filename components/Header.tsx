@@ -3,11 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import MenuToggle from "./MenuToggle";
 import MenuOverlay from "./MenuOverlay";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isWorkDetail = /^\/works\/[^/]+$/.test(pathname ?? "");
 
   return (
     <>
@@ -22,10 +25,26 @@ export default function Header() {
               className="h-[2.86458vw] w-[3.58073vw]"
             />
           </Link>
-          <MenuToggle open={open} onToggle={() => setOpen((v) => !v)} />
+          {isWorkDetail ? (
+            <Link
+              href="/works"
+              aria-label="Back to works"
+              className="flex size-[2.5vw] items-center justify-center"
+            >
+              <Image
+                src="/assets/icons/close-x.svg"
+                alt=""
+                width={35}
+                height={35}
+                className="w-[1.82292vw] rotate-45"
+              />
+            </Link>
+          ) : (
+            <MenuToggle open={open} onToggle={() => setOpen((v) => !v)} />
+          )}
         </div>
       </header>
-      <MenuOverlay open={open} onClose={() => setOpen(false)} />
+      {!isWorkDetail && <MenuOverlay open={open} onClose={() => setOpen(false)} />}
     </>
   );
 }
