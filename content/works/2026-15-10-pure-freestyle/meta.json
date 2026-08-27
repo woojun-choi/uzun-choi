@@ -9,5 +9,13 @@
     "film"
   ],
   "cover": "media/01_still_01_00m25.17s.png",
-  "order": 2
+  "order": 2,
+  "credit": [
+    { "role": "Artist", "name": "chansimoto" },
+    { "role": "Directed By", "name": "Siz" },
+    { "role": "Camera & Lighting By", "name": "UZUN, Kihoon" },
+    { "role": "Edited By", "name": "Siz" },
+    { "role": "Recorded, Mixed & Mastered By", "name": "Siz" }
+  ],
+  "videoUrl": "https://youtu.be/YYOSLc0MZYQ"
 }
