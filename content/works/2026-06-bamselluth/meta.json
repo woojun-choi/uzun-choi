@@ -9,5 +9,6 @@
     "photo"
   ],
   "cover": "media/01_CP-B-01.jpg",
-  "order": 11
+  "order": 11,
+  "featured": true
 }

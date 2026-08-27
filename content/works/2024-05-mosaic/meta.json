@@ -9,5 +9,6 @@
     "photo"
   ],
   "cover": "media/01___.jpg",
-  "order": 23
+  "order": 23,
+  "featured": true
 }

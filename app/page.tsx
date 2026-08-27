@@ -1,10 +1,10 @@
 import HeroSection, { type HeroSlide } from "@/components/HeroSection";
-import { getAllWorks, workHeroCoverUrl } from "@/lib/works";
+import { getFeaturedWorks, workHeroCoverUrl } from "@/lib/works";
 
 const HERO_SLOT_COUNT = 5;
 
 export default function Home() {
-  const works = getAllWorks();
+  const works = getFeaturedWorks();
 
   const realSlides: HeroSlide[] = works.map((work) => ({
     id: work.slug,

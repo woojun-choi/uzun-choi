@@ -9,5 +9,6 @@
     "photo"
   ],
   "cover": "media/01_lighting_food_realreal_final.jpg",
-  "order": 20
+  "order": 20,
+  "featured": true
 }
