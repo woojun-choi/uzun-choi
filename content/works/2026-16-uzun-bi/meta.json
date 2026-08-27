@@ -1,13 +1,14 @@
 {
   "slug": "2026-16-uzun-bi",
   "title": {
-    "ko": "uzun BI",
-    "en": "uzun BI"
+    "ko": "UZUN BI",
+    "en": "UZUN BI"
   },
   "year": 2026,
   "category": [
     "design"
   ],
   "cover": "media/01_2026-17---1.jpg",
-  "order": 1
+  "order": 1,
+  "featured": true
 }
