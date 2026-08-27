@@ -1,5 +1,102 @@
 # uzun-choi 인수인계 로그
 
+## 2026-08-27 02:40 — About CV 문구 수정, Works 그리드 UI 조정, 메인 히어로 featured 선별
+
+**지금 상태**: 여러 작은 요청을 순서대로 처리함(전부 미커밋, `git status` 기준 수정 상태).
+1. `components/AboutSection.tsx:60` — CV 항목 중 "디자인 에이전시 인턴십"(한글 subtitle만) → "디자인 에이전시 인턴십 근무"로 텍스트 추가. 영문 title은 그대로.
+2. `components/WorksGrid.tsx:28` — 옛 헤더 높이 기준 leftover였던 `pt-[9.89583vw]`(190px)를 실제 헤더 높이(`h-[8.85417vw]`, 170px)에 맞춰 `pt-[8.85417vw]`로 수정(간격 0).
+3. `components/WorksGrid.tsx` 왼쪽 카테고리 `<nav>` — `sticky top-[8.85417vw] h-fit` 추가해서 그리드 스크롤해도 헤더 바로 아래 붙어서 따라 내려오게 함(기존엔 `relative`만 있어서 스크롤하면 그냥 사라졌음).
+4. `components/WorksGrid.tsx` 카드 호버 시 연도 텍스트 — 크기 `0.84375vw`(16.2px)→`0.885417vw`(17px), 색상 `text-white/70`→`text-white/60`.
+5. **메인 페이지 히어로 selection 기능 추가**: 지금까지 `app/page.tsx`가 `getAllWorks()`(27개 전부)를 히어로 슬라이드로 썼는데, 사용자가 지정한 순번(현재 order 기준 1,2,3,8,11,12,14,18,20,21,23) 중 2번("10 PURE Freestyle")은 이후 빼달라고 해서 최종 10개만 노출되도록 함. 구현: `WorkMeta`에 `featured?: boolean` 필드 추가, `lib/works.ts`에 `getFeaturedWorks()`(= `getAllWorks().filter(w => w.featured)`, order 정렬은 `getAllWorks()`가 이미 처리) 추가, `app/page.tsx`가 `getAllWorks()` 대신 `getFeaturedWorks()` 사용하도록 교체. 해당 10개 작업(`content/works/2026-16-uzun-bi`, `2026-14-jeju`, `2026-09-movie-land`, `2026-06-bamselluth`, `2026-05-eol`, `2026-03-jbl-go-4`, `2025-05-iphone-obscura`, `2025-03-waffle`, `2025-02-hongyeon`, `2024-05-mosaic`)의 `meta.json`에 `"featured": true` 추가. `/works` 그리드 페이지는 그대로 `getAllWorks()`(27개 전체) 유지 — featured는 메인 히어로 전용 필터.
+
+**남은 일**: 사용자가 다음 작업으로 **"프로젝트별 크레딧이랑 이것저것 상세페이지 수정, 1번부터 27번까지 차례대로"**를 요청함(order 1~27 순서, 위 order↔slug 매핑은 아래 참고 항목 표 참조). 항목별로:
+- `credit` 필드(스키마는 있으나 27개 전부 미채움, `WorkCredit = {role, name}[]`) 채우기
+- 지난 세션에 미룬 "2번" 항목 — 8장 초과 작업의 하단 스택 이미지 섹션(`WorkDetail.tsx`의 `showStacked`, 현재 `object-cover`/`object-contain` 분기 없이 자연비율 그대로)도 "크레딧 정리하면서 프로젝트별로 같이 맞추기"로 사용자가 확정함 — 크레딧 작업과 묶어서 진행할 것
+- 그 외 사용자가 프로젝트마다 짚어줄 "이것저것" 상세페이지 수정(구체 항목은 세션 진행하면서 사용자가 하나씩 지시할 예정, 아직 목록화 안 됨)
+- 진행 순서는 반드시 order 1번(`2026-16-uzun-bi`)부터 27번(`2024-01-giwon`) 순서대로, 건너뛰지 말 것
+
+**하면 안 되는 일**: 히어로/스택 이미지 크롭 관련 과거 결정 뒤집지 말 것 — 세로 사진에 `object-cover` 재적용 금지(크롭 때문에 반려됨), 이는 [[스택 이미지 섹션에도]] 적용될 예정이니 스택 섹션 작업 시에도 세로/가로 orientation 분기(heroPortrait 패턴과 동일하게) 적용할 것. featured 목록의 순서나 구성원을 임의로 바꾸지 말 것(사용자가 명시적으로 확정한 10개).
+
+**검증 방법**: `http://localhost:3000`(메인, featured 10개 슬라이드), `http://localhost:3000/works`(그리드 27개 + sticky 카테고리 nav + 연도 텍스트 크기/색상), `http://localhost:3000/about`(CV "인턴십 근무" 문구) 확인. 포트 3000에 uzun-choi 전용 `next-server`(PID는 `lsof -ti:3000`으로 확인) 하나만 떠 있어야 정상.
+
+**참고**: order↔slug 매핑 전체(1~27, `content/works/*/meta.json`의 `order` 필드 기준): 1 uzun-bi(2026-16), 2 pure-freestyle(2026-15, featured 아님), 3 jeju(2026-14), 4 movie-land-magazine(2026-13), 5 0000(2026-12), 6 uzun-magazine(2026-11), 7 dotters(2026-10), 8 movie-land(2026-09), 9 derick(2026-08), 10 byeonjeonghun(2026-07), 11 bamselluth(2026-06), 12 eol(2026-05), 13 in-your-eyes(2026-04), 14 jbl-go-4(2026-03), 15 biraksikhye(2026-02), 16 noknok(2026-01), 17 nukumori(2025-06), 18 iphone-obscura(2025-05), 19 bazzar-cover(2025-04), 20 waffle(2025-03), 21 hongyeon(2025-02), 22 dakdari(2025-01), 23 mosaic(2024-05), 24 bulnabang(2024-04), 25 fc-coant-logo(2024-03), 26 guseok(2024-02), 27 giwon(2024-01). `lib/works.ts`(`getFeaturedWorks`), `app/page.tsx`, `components/WorkDetail.tsx`(크레딧 렌더링 위치 확인 필요 — 아직 credit 표시 UI 자체를 안 봄, 있는지부터 확인할 것).
+
+## 2026-08-26 02:35 — 코드 변경 없음, 프로젝트 히스토리를 옵시디언 노트로 정리
+
+**지금 상태**: 이번 세션은 코드 작업이 아니라 문서화 세션이었음 — 직전 항목(2026-08-23 13:02)에서 끝난 히어로 레이아웃 상태 그대로, 코드/git diff 변화 없음(`git diff --stat` 동일). 사용자 요청으로 프로젝트 전체 기록과 고민 과정(특히 히어로 레이아웃 삽질)을 옵시디언 볼트(`~/Documents/Obsidian Vault/uzun-choi 웹 포트폴리오/`)에 노트 4개로 정리함: 허브 노트("uzun-choi 웹 포트폴리오"), "uzun-choi 초기 구축과 페이지 작업", "uzun-choi Works 콘텐츠 교체 작업", "uzun-choi 상세페이지 히어로 레이아웃 삽질기"(가장 상세, 크롭/레터박스 반려·Chrome-Safari 미스터리·Figma 재조회 돌파구·헤더 padding 버그·서버 포트 충돌·박스 크기 조정·fill 용어 혼선까지 시간순 기록). HANDOFF.md의 과거 로그를 소스로 씀.
+
+**남은 일**: 직전 항목(2026-08-23 13:02)의 남은 일 그대로 유효함 — (1) 사용자 최종 눈 확인, (2) 8장 초과 스택 이미지 섹션에 crop/contain 분기 미적용, (3) `WorksGrid.tsx`의 `pt-[9.89583vw]` leftover 방치, (4) Credit 필드 실데이터 미채움. 옵시디언 노트 쪽은 추가로 필요한 게 생기면(새 세션 내용 등) 같은 폴더에 이어서 기록하면 됨 — 노트를 지우거나 덮어쓰지 말 것(옵시디언 쪽도 이 프로젝트 HANDOFF와 같은 append 원칙).
+
+**하면 안 되는 일**: 직전 항목과 동일, 변경 없음.
+
+**검증 방법**: 포트 3000에 uzun-choi 전용 `next-server`(PID는 `lsof -ti:3000`으로 확인, 이번 세션 기준 53533/부모 53532) 하나만 떠 있어야 정상 — lsof에 Chrome/WebKit 헬퍼 프로세스가 같이 잡히는 건 무시해도 됨(실제 서버 아님). 옵시디언 노트는 `~/Documents/Obsidian Vault/uzun-choi 웹 포트폴리오/` 4개 파일로 확인 가능.
+
+**참고**: HANDOFF.md 직전 항목들(특히 2026-08-23 13:02, 2026-08-23 "이어서"/"추가" 세 개) — 이번 옵시디언 노트의 소스 그대로임. 옵시디언 노트: `uzun-choi 웹 포트폴리오.md`(허브), `uzun-choi 상세페이지 히어로 레이아웃 삽질기.md`(가장 자세함).
+
+## 2026-08-23 13:02 — 히어로 박스 크기 확정(1520 기준) + 세로 사진 crop→contain 전환
+
+**지금 상태**: 직전 항목들에서 다진 히어로 레이아웃을 이번 세션에서 계속 다듬어 아래 상태로 확정함(전부 `components/WorkDetail.tsx`).
+1. 서버 정리: 3000번 포트에 떠 있던 게 uzun-choi가 아니라 다른 프로젝트(`design-gb-2026`)의 `next dev`였던 걸 발견 → 사용자 확인 후 종료. 검증용 `next.config.ts`의 `distDir: ".next-verify"`도 원복(현재 `git diff next.config.ts` 클린), `.next-verify` 삭제. 지금은 uzun-choi 전용 `next dev -p 3000` 하나만 떠 있음.
+2. 히어로 상단 여백: `pt-[8.85417vw]`(헤더 실제 높이 170px 기준, 간격 0) → 사용자 요청으로 30px(1920 기준) 추가로 위로 올려 `pt-[7.291667vw]`로 확정.
+3. 히어로 박스 크기: Figma 원본(1793×890, `93.385417vw × 46.354167vw`)에서 두 차례 축소 시도(1440 → 반려, 1520 → 확정) 끝에 구조를 다음과 같이 확정: **바깥 밴드는 Figma 원본 크기(`93.385417vw × 46.354167vw`, mx-auto)를 그대로 유지**해서 타이틀(bottom-left)·스크롤버튼(bottom-right)이 원래 위치에 고정되고, **그 안의 사진 박스만 1520×855.661px**(1581:890 비율 유지)로 줄여서 `w-[79.166667vw] h-[44.565679vw] left-[7.109375vw]`로 가로 중앙 정렬. 사진이 밴드보다 작아지면서 밴드 하단에 여유 공간이 생기고 타이틀/스크롤은 그 여유 공간 위쪽, 사진 안쪽에 걸치는 형태.
+4. 세로/가로 사진 처리 분기: 가로 사진은 기존대로 `object-cover`(크롭해서 박스 꽉 채움, Figma 스펙과 일치). **세로 사진은 크롭하면 대부분 잘려나가는 문제가 있어서, 사용자가 "박스 높이에 맞춰 세로만 채우고(크롭도 왜곡도 없이) 좌우는 남는 대로 두자"고 확정** → `object-contain`으로 전환. `heroIndex` state 옆에 `heroPortrait` state를 추가하고 `<img onLoad>`에서 `naturalHeight > naturalWidth`로 세로/가로 판별해서 `object-contain`/`object-cover`를 동적으로 전환. 좌우 여백은 어차피 배경(`bg-[#0c0c0c]`)과 같은 검정이라 티 안 남.
+
+**남은 일**: (1) 사용자 최종 눈으로 재확인 필요(계속 강조돼온 부분 — 이번엔 3000번 uzun-choi 전용 dev로 직접 봄). (2) 8장 초과시 하단 스택 이미지 섹션(`showStacked`)은 여전히 손 안 댐 — Figma상 `object-cover` 고정 높이인데 코드는 `block w-full`(auto height, no crop) 그대로. 세로/가로 분기 처리도 아직 없음. 필요하면 히어로와 동일한 패턴(orientation 판별 + contain/cover 분기) 적용할 것. (3) `WorksGrid.tsx`에 남아있는 동일한 `pt-[9.89583vw]` leftover는 여전히 방치 상태(사용자가 그리드 페이지는 안 물어봄). (4) `credit` 필드 실데이터 27개 미채움.
+
+**하면 안 되는 일**: 히어로 밴드(바깥 wrapper) 크기를 줄이지 말 것 — 타이틀/스크롤 버튼 위치가 거기 고정되어 있음, 줄이면 사용자가 반려했던 "타이틀도 같이 작아지는" 상태로 돌아감. 세로 사진에 `object-cover`를 다시 쓰지 말 것(크롭 때문에 반려됨). 포트 3000이 다른 프로젝트(`design-gb-2026`)와 충돌할 수 있으니, uzun-choi 작업 재개 전 `lsof -ti:3000`으로 뭐가 떠 있는지 먼저 확인할 것.
+
+**검증 방법**: `npm run dev`(또는 `npx next dev -p 3000`)로 uzun-choi 단독 서버 실행. `http://localhost:3000/works/2026-09-movie-land`(가로, cover 확인), `http://localhost:3000/works/2025-02-hongyeon`(세로, contain 확인 — 반지 사진 전체가 크롭 없이 다 보여야 함) 두 곳 크로스체크. 1920px 뷰포트로 맞추고 DOM `getBoundingClientRect()`로 실측하면 헤더-히어로 간격 0, 밴드 1793×890, 사진박스 1520×855.66 나와야 함(1vw = innerWidth/100로 환산).
+
+**참고**: `components/WorkDetail.tsx` 히어로 섹션 전체(파일 상단, `heroPortrait` state와 `<main>` 첫 `<div>` 블록). Figma "UC WEB" "4. Details - standard"(`363:746`).
+
+## 2026-08-23 (이어서) — 히어로 레이아웃 버그 원인 확인 및 수정 완료
+
+**지금 상태**: 직전 항목에서 미해결이던 히어로 캐러셀 레이아웃 문제를 Figma "4. Details - standard"(node `363:746`) 재조회로 해결함. 근본 원인: Figma 원본은 히어로 이미지를 자연비율(auto height)이 아니라 **고정 크기 박스(1581×890px @1920 기준 = 82.34375vw × 46.354167vw) + `object-cover`(크롭해서 꽉 채움)** 구조였음 — "크롭 없음"과 "레터박스 없이 꽉 채우기"가 충돌하는 게 아니라, Figma 자체가 크롭 쪽을 선택한 것. `components/WorkDetail.tsx`의 히어로 `<img>`를 `block w-full`(auto height, no crop) → `absolute h-full w-[82.34375vw] object-cover`로 교체, 바깥 wrapper를 `w-[82.34375vw]`(이미지 폭만) → `h-[46.354167vw] w-[93.385417vw]`(Figma의 "Thumbnail/carousel" 컨테이너 폭)로 변경하고 이미지를 그 안에서 `left-[5.729167vw]` 오프셋으로 배치. 타이틀(`UZUN CHOI 2026`)은 이미지 왼쪽 끝이 아니라 이 넓은 컨테이너의 왼쪽 끝(=본문 Description/Credit과 같은 페이지 좌측 여백) 기준으로 정렬되도록 함 — Figma에서 타이틀이 이미지보다 살짝(110px/1920 = 5.73vw) 왼쪽으로 나가 있는 걸 그대로 반영. 가로(영화관 사진, 3:2), 세로(반지 사진), 24장 와이드 스틸컷 3가지로 Chrome 스크린샷 교차 확인 완료 — 전부 레터박스 없이 박스 꽉 채움.
+
+**남은 일**: (1) **사용자 실제 화면(Safari)에서 재확인 필요** — 직전 세션에서 Chrome은 정상인데 Safari에서 다르게 보였던 미해결 미스터리가 있었음, 이번 수정도 Chrome 검증만 했으므로 사용자 눈으로 최종 확인 전까지 "완료"로 단정하지 말 것. (2) 8장 초과시 하단 스택 이미지 섹션(`showStacked`)도 Figma상 `object-cover` 고정 높이(1014.972px @1920 = 52.859vw, 폭은 본문과 동일 93.90625vw)로 되어 있는데 현재 코드는 여전히 `block w-full`(auto height, no crop)임 — 이번엔 "히어로"만 요청받아서 손대지 않음, 필요시 동일 패턴 적용. (3) `credit` 필드 실데이터 27개 미채움 — 그대로.
+
+**하면 안 되는 일**: 히어로는 반드시 고정 크기 박스 + `object-cover`로 — natural aspect/auto height로 되돌리면 직전 세션에서 겪은 "사진마다 높이 들쭉날쭉" 문제 재발함. Chrome 검증만으로 "고쳐졌다"고 사용자에게 보고하지 말 것(위 남은 일 (1) 참고).
+
+**검증 방법**: 포트 3200 서버(`next start`, `.next-verify` 빌드) 살아있음. `http://localhost:3200/works/2026-09-movie-land`(가로), `http://localhost:3200/works/2025-02-hongyeon`(세로), `http://localhost:3200/works/2026-15-10-pure-freestyle`(24장) 3개 비교. 재빌드 시 `npx next build && npx next start -p 3200`(`distDir: ".next-verify"` 유지).
+
+**참고**: `components/WorkDetail.tsx` 히어로 섹션(파일 상단 `<main>` 안 첫 `<div>` 블록). Figma "UC WEB" 파일 "4. Details - standard"(`363:746`) — 특히 `Thumbnail/carousel`(`627:604`, 1793×890) / `proj`(`608:426`, 1581×890, object-cover) 노드.
+
+## 2026-08-23 (추가) — "처진" 느낌 리포트 → 헤더 패딩 leftover 값 버그 발견 및 수정
+
+**지금 상태**: 사용자가 "스크롤 버튼/타이틀/이미지 위치가 좀 쳐진 것 같다"고 재문제 제기. Chrome JS로 실제 뷰포트 1920px에서 DOM `getBoundingClientRect()` 실측 → 히어로 박스 크기·위치는 Figma 1920 기준값과 소수점까지 정확히 일치(오차 없음), 즉 vw 공식 자체는 문제 없었음. 대신 `Header.tsx`가 `fixed` 헤더로 실제 높이 `h-[8.85417vw]`(170px@1920)인데, `WorkDetail.tsx`의 `<main>`은 `pt-[9.89583vw]`(190px, 옛 헤더 높이 기준 leftover — 2026-08-18 항목에서 WorksGrid/MenuOverlay에 이미 발견됐던 것과 동일한 값이 WorkDetail에도 그대로 들어가 있었음)를 쓰고 있어서 헤더-히어로 사이에 1920 기준 20px 여백이 떠 있었음. `pt-[8.85417vw]`로 수정 → 재빌드 후 1920px 뷰포트 실측으로 간격 0(완전히 붙음) 확인.
+
+**남은 일**: (1) 사용자에게 최종 확인 요청(Safari 실제 화면). (2) `WorksGrid.tsx`도 동일한 `pt-[9.89583vw]` leftover가 남아있음(2026-08-18 항목에서 "시각적으로 문제없어 보여서 그대로 둠"이라고 의도적으로 방치한 상태) — 이번엔 손대지 않았으나, 사용자가 그리드 페이지도 같이 봐달라고 하면 동일하게 `pt-[8.85417vw]`로 바꿀 것.
+
+**하면 안 되는 일**: 없음.
+
+**검증 방법**: 브라우저 뷰포트를 정확히 1920px로 맞추고(`resize_window` 등) `document.querySelector('header').getBoundingClientRect().bottom`과 히어로 wrapper `.getBoundingClientRect().top`의 차이가 0인지 확인. 뷰포트가 1920이 아니면 브라우저 chrome/OS 스케일링 때문에 `window.innerWidth`가 다르게 나올 수 있으니 반드시 `window.innerWidth`를 같이 로그해서 실제 배율로 환산할 것(1vw = innerWidth/100).
+
+**참고**: `components/WorkDetail.tsx:50`(`pt-[8.85417vw]`로 수정됨), `components/Header.tsx:17`(`h-[8.85417vw]`, fixed 헤더). `components/WorksGrid.tsx:28`에 동일 leftover(`pt-[9.89583vw]`) 여전히 남아있음.
+
+## 2026-08-23 11:34 — 작업 상세페이지(/works/[slug]) 신규 구현, 히어로 이미지 레이아웃 미해결 상태로 중단
+
+**지금 상태**: Figma "4. Details - standard" 프레임(node `363:746`) 기준으로 `/works/[slug]` 상세페이지를 새로 구현함 — `app/works/[slug]/page.tsx`, `components/WorkDetail.tsx`(캐러셀+Description+Credit+8장 초과시 하단 스택 이미지+라이트박스), `lib/works.ts`에 `getWork`/`getWorkMedia`/`getWorkDescription` 추가 및 `WorkMeta`에 `credit`(`{role,name}[]`)·`videoUrl` 필드 추가, `WorksGrid.tsx` 카드를 상세페이지로 링크, `Header.tsx`는 상세페이지에서 메뉴 아이콘 대신 X(누르면 `/works`로)로 바뀌게 처리, `ScrollNav.tsx`에 `className`/`disabled` prop을 추가해 홈 히어로와 상세페이지 캐러셀이 같은 스크롤 버튼 컴포넌트를 공유하도록 함. 라이트박스는 닫기 아이콘 진짜 X로 회전 수정, 좌우 화살표 방향 수정, 클릭시 추가 확대(zoom+스크롤) 기능까지 완료. **다만 히어로 캐러셀 이미지 레이아웃은 여러 번 갈아엎었는데도 사용자가 마지막에 "완전 잘못됐다"고 재차 문제 제기했고, 정확히 뭐가 잘못됐는지 스크린샷을 요청한 채로 세션이 종료됨 — 미해결.**
+
+**남은 일**: (1) 사용자가 보낼 스크린샷으로 실제 증상부터 다시 확인할 것(추측 금지). (2) 히어로 이미지 레이아웃 요구사항이 세션 내내 계속 바뀌었음 — "크롭 없음" / "가로 이미지와 높이 통일" / "레터박스 없이 꽉 차게" 가 서로 충돌하는 요구라는 걸 사용자에게 먼저 명확히 설명하고 하나를 확정받고 시작할 것. (3) `credit` 필드는 스키마만 추가됐고 27개 작업 실데이터는 하나도 안 채워짐 — 다음 단계. (4) 나머지(About/QA/배포)는 기존 로드맵 그대로, 변경 없음.
+
+**하면 안 되는 일**: `object-fit: contain` + 고정 높이 박스 조합은 사진 비율이 프레임(16:9 비슷)과 안 맞으면 레터박스가 크게 남아서 사용자가 명시적으로 거부함(영화관 사진 예시로 확인) — 다시 시도하지 말 것. `w-fit` shrink-wrap 방식도 시도했으나 그 다음에도 불만이 나왔음. **가장 중요한 함정**: 내 Chrome 브라우저 테스트로는 "정상"이라고 여러 차례 확인했는데 사용자의 실제 화면(Safari)에서는 계속 다르게/잘못 보인다고 함 — 처음엔 캐싱 문제로 추정했지만 빌드 타임스탬프로 반증됨(원인 불명, 아직 안 풀림). **Chrome 자체 검증만으로 "고쳐졌다"고 사용자에게 보고하지 말고, 반드시 사용자의 실제 스크린샷으로 재확인 후 보고할 것.**
+
+**검증 방법**: 서버가 포트 3200에 떠 있음(`next start`, `.next-verify` 빌드, PID는 `lsof -ti:3200`으로 확인). `http://localhost:3200/works/2026-09-movie-land`(가로 3:2 사진, 레터박스 이슈 재현했던 작업), `http://localhost:3200/works/2025-02-hongyeon`(세로 사진), `http://localhost:3200/works/2026-15-10-pure-freestyle`(24장, 와이드 스틸컷) 세 가지 비율로 교차 확인 필요. 재빌드 시 `next.config.ts`의 `distDir: ".next-verify"` 유지한 채 `npx next build && npx next start -p 3200`.
+
+**참고**: `components/WorkDetail.tsx`(현재 히어로는 `w-[82.34375vw]` 고정폭 + 높이 자연 비율, 크롭/레터박스 없음 — 되돌린 버전), `components/ScrollNav.tsx`, `components/Header.tsx`, `lib/works.ts`. Figma 파일 "UC WEB"의 "4. Details - standard" 프레임(`363:746`)이 원본 스펙. `next.config.ts`에 검증용 `distDir` 변경이 커밋 안 된 채 남아있음(의도된 임시 상태, 작업 재개 시 그대로 두고 써도 됨).
+
+## 2026-08-20 01:09 — 27개 실작업 교체 건 커밋 완료 (a6e66de)
+
+**지금 상태**: 직전 항목(01:03)에서 정리한 작업 전체를 `a6e66de` 커밋 1개로 반영함("Replace dummy works with 27 real projects, add editorial category", 393 files changed). dummy-01~20·sanjeong 삭제, 27개 실작업 폴더 추가, `lib/works.ts`/`WorksGrid.tsx`/`app/page.tsx`/`content/works/README.md`/`.gitignore`/`CLAUDE.md` 수정 모두 포함. `git status` clean. `content/works/input_contents/`(원본 백업, ~1.1GB)는 계획대로 커밋에서 제외됨(.gitignore). push는 안 함.
+
+**남은 일**: (1) `/works/[slug]` 상세 페이지 제작 — 미착수. (2) 최종 QA(반응형, 접근성, Lighthouse)와 배포 — 미착수. (3) 원격에 push할지는 아직 안 물어봤음.
+
+**하면 안 되는 일**: 직전 항목(01:03)과 동일 — `input_contents/` 삭제 금지, 커버 이미지 임의 재선정 금지.
+
+**검증 방법**: `git log --oneline -3`에 `a6e66de`가 최신이어야 함. `git status`가 clean해야 함(HANDOFF.md 이번 커밋 반영 전이면 `?? HANDOFF.md` 한 줄만 남아있는 게 정상).
+
+**참고**: 직전 항목(2026-08-20 01:03) 참고. 커밋 해시 `a6e66de`.
+
 ## 2026-08-20 01:03 — dummy work 20개를 실제 작업 27개로 전면 교체, 커버/설명 전부 채움
 
 **지금 상태**: 사용자가 `content/works/input_contents/`에 넣어둔 27개 실작업 폴더(2024~2026, 사진/영상/디자인)를 `content/works/<slug>/` 스키마로 재구성 완료. dummy-01~20 삭제, 기존 중복 항목 `sanjeong`은 `2026-14-jeju`로 통합 후 삭제. 27개 전부 사용자와 1개씩 확인하며 커버 이미지 확정 + `content.ko.md`/`content.en.md` 실제 설명 작성 완료(placeholder 없음, `grep`으로 검증함). `book` 카테고리는 `editorial`로 개명하고 DEV 앞으로 순서 이동(`lib/works.ts`, `WorksGrid.tsx`, README 반영). 홈 히어로/Works 그리드 커버를 분리하는 `heroCover` 필드를 `WorkMeta`에 신규 추가(`workHeroCoverUrl`), iPhone obscura 작업에 적용. 격리 dev 서버(포트 3200, uzun-choi 자체 dev 서버는 미실행 상태였음)로 그리드 27장 전체 로드·EDITORIAL 필터 확인 완료. **아직 아무것도 git commit 안 함** — `git status` 118개 변경 대기 중.
