@@ -1,5 +1,20 @@
 # uzun-choi 인수인계 로그
 
+## 2026-08-28 21:20 — 27개 작업 전체 순회(크레딧/설명/히어로 정리) 완료, 커밋·푸시 완료
+
+**지금 상태**: 지난 세션에서 시작한 "1번부터 27번까지 작업 순서대로 크레딧이랑 상세페이지 수정" 작업을 이번 세션에서 끝까지 완료함. 두 커밋으로 나눠 커밋·푸시까지 마침(`bef77f1` 코드/스키마, `47119f0` 27개 작업 콘텐츠 편집) — `git status`/`origin/main` 완전히 동기화된 상태.
+1. **코드/스키마 신규 기능**(`components/WorkDetail.tsx`, `lib/works.ts`): `WorkMeta`에 `heroPortrait`(정사각/애매한 비율 이미지를 세로처럼 강제 `object-contain` 처리), `heroMedia`/`stackedMedia`(히어로·스택 섹션에 보여줄 이미지를 명시적으로 지정, 없으면 기존 동작 — 전체/슬러그 시드 랜덤 7장 — 유지) 추가. Description/Credit 텍스트에 weight+opacity 위계(라벨은 굵게, 본문/값은 `font-[550] text-white/80`) 적용, 문단 줄바꿈 실제 렌더링되도록 수정(`\n{2,}` split), 언어별 행간 별도 조정(영문 1.85vw/한글 1.95vw). **Esc 키**: 라이트박스 열려있으면 닫기, 아니면 헤더 X와 동일하게 `/works`로 이동(`useRouter` + `keydown` 리스너).
+2. **27개 작업 전체 편집**: 각 작업 순회하며 (a) 설명 문장 다듬기/불필요한 "전 과정을 직접 진행했다"류 문장 정리, (b) 협업 작업엔 크레딧 추가(`Photo by`/`Model`/`Artist`/`Artwork by`/`Special Thanks to`, "by"는 항상 소문자), 순수 개인 작업은 크레딧 생략, (c) 정사각/특이 비율 커버(In your eyes, 불나방, 구석 등)에 `heroPortrait: true`, (d) 매거진류(Magazine A - Movie Land, Magazine A - UZUN)에 `heroMedia`/`stackedMedia`로 히어로엔 촬영컷만, 스택엔 특정 내지 스캔만 고정 노출, (e) iPhone obscura는 히어로 14,15,12,11,13 순서 + 스택 1~10번 전부. Nukumori의 안 쓰는 2번째 이미지(포스터)는 파일째 삭제.
+3. **디자인 사이드 트랙**: `RollingNumber.tsx`(ScrollNav 페이지네이션 숫자)의 "두자릿수 정렬이 이상해 보인다" 이슈 — devtools로 픽셀 단위까지 정밀 측정해서 실제 레이아웃은 완벽히 동일함을 확인, 폰트 자체의 숫자 글리프 모양 차이(정상)로 결론. `tabular-nums`를 시도했다가 사용자가 "애매하다"며 되돌려달라고 해서 원상복구함 — 현재 `RollingNumber.tsx`는 이 세션 이전 상태 그대로.
+
+**남은 일**: 대화 중 사용자에게 물어봤지만 아직 답을 못 받은 것들 — (1) 변정훈(order 10) 영문 타이틀이 로마자 표기(`Byeon Jeonghun`) 없이 한글 그대로인 것 확인 필요. (2) BAZZAR Cover(order 19) 제목 스펠링이 실제 매거진명(Harper's BAZAAR)과 다른데 그대로 둘지 확인 필요. (3) 닭다리(order 22)에 실제 영상 링크(`videoUrl`)가 있으면 추가 요청받았으나 링크를 못 받음 — 유지로 확정됨(더 손 안 대는 걸로 사용자가 정리함). (4) FC COANT(order 25)는 크레딧 없이 넘어감(사용자 확인).
+
+**하면 안 되는 일**: `RollingNumber.tsx`에 `tabular-nums`나 폰트 굵기 변경을 다시 시도하지 말 것 — 레이아웃 자체는 문제 없다고 실측으로 확인됐고, 사용자가 "애매하다"며 원복을 택함. 재작업 필요하면 사용자가 먼저 다시 요청할 것. `heroMedia`/`stackedMedia`/`heroPortrait`는 명시적으로 지정된 작업에만 있고 나머지 작업은 그대로 자동 로직(전체 순서/슬러그 랜덤 7장/실제 비율 자동판별)을 타므로, 이 필드들이 없는 작업에 굳이 채워 넣을 필요 없음(자동 동작이 기본값).
+
+**검증 방법**: `git log --oneline -3`에 `47119f0`가 최신, `git status`가 clean, `origin/main`과 동기화(`git status -sb`에 ahead/behind 없음)인지 확인. 브라우저에서 `http://localhost:3000/works`(그리드) → 아무 작업이나 눌러서 상세페이지 진입 → 이미지 확대(라이트박스) 후 Esc(닫힘) → 다시 Esc(그리드로 나감) 확인. 정사각 커버 작업(예: `/works/2026-04-in-your-eyes`, `/works/2024-04-bulnabang`)에서 이미지가 크롭 없이 세로처럼 나오는지, 매거진 작업(`/works/2026-13-magazine-a-movie-land`, `/works/2026-11-magazine-a-uzun`)에서 히어로/스택이 지정한 이미지만 나오는지 확인.
+
+**참고**: `components/WorkDetail.tsx`(`heroPortrait`/`heroMedia`/`stackedMedia` 처리 로직, Esc 핸들러), `lib/works.ts`(`WorkMeta` 타입), `content/works/README.md`(신규 필드 문서화), 커밋 `bef77f1`(코드)·`47119f0`(콘텐츠). order↔slug 매핑은 직전 항목(2026-08-27 02:40) 참고 항목에 표로 정리돼 있음.
+
 ## 2026-08-27 02:40 — About CV 문구 수정, Works 그리드 UI 조정, 메인 히어로 featured 선별
 
 **지금 상태**: 여러 작은 요청을 순서대로 처리함(전부 미커밋, `git status` 기준 수정 상태).
