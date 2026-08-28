@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ScrollNav from "./ScrollNav";
 import type { WorkMeta } from "@/lib/works";
@@ -64,19 +65,30 @@ export default function WorkDetail({
   media: string[];
   description: { ko: string; en: string };
 }) {
+  const router = useRouter();
   const [heroIndex, setHeroIndex] = useState(0);
-  const [heroPortrait, setHeroPortrait] = useState(false);
+  const [heroPortrait, setHeroPortrait] = useState(work.heroPortrait ?? false);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
+  const resolveMedia = (files: string[]) =>
+    files.map((f) => `/works-media/${work.slug}/${f}`);
+
+  const heroMedia = work.heroMedia?.length ? resolveMedia(work.heroMedia) : media;
+  const heroTotal = heroMedia.length;
+  const heroArrowsDisabled = heroTotal <= 1;
+
   const total = media.length;
   const pad = (zeroBased: number) => String(zeroBased + 1).padStart(2, "0");
-  const arrowsDisabled = total <= 1;
   const showStacked = total > 8;
-  const stackedMedia = showStacked ? pickStacked(media, work.slug) : [];
+  const stackedMedia = showStacked
+    ? work.stackedMedia?.length
+      ? resolveMedia(work.stackedMedia)
+      : pickStacked(media, work.slug)
+    : [];
 
-  const heroPrev = () => setHeroIndex((i) => (i - 1 + total) % total);
-  const heroNext = () => setHeroIndex((i) => (i + 1) % total);
+  const heroPrev = () => setHeroIndex((i) => (i - 1 + heroTotal) % heroTotal);
+  const heroNext = () => setHeroIndex((i) => (i + 1) % heroTotal);
   const openLightbox = (i: number) => {
     setLightbox(i);
     setIsZoomed(false);
@@ -85,6 +97,19 @@ export default function WorkDetail({
     setLightbox(null);
     setIsZoomed(false);
   };
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== "Escape") return;
+      if (lightbox !== null) {
+        closeLightbox();
+      } else {
+        router.push("/works");
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [lightbox, router]);
   const lightboxPrev = () => {
     setLightbox((i) => (i === null ? i : (i - 1 + total) % total));
     setIsZoomed(false);
@@ -100,15 +125,17 @@ export default function WorkDetail({
           object-cover (crop, fills box, per Figma). Portrait images object-contain
           (fit to box height, no crop, pillarboxed on the same dark background). */}
       <div className="relative mx-auto h-[46.354167vw] w-[93.385417vw]">
-        {total > 0 && (
+        {heroTotal > 0 && (
           // eslint-disable-next-line @next/next/no-img-element -- fixed box, orientation-aware fit
           <img
-            src={media[heroIndex]}
+            src={heroMedia[heroIndex]}
             alt={work.title.ko}
-            onClick={() => openLightbox(heroIndex)}
-            onLoad={(e) =>
-              setHeroPortrait(e.currentTarget.naturalHeight > e.currentTarget.naturalWidth)
-            }
+            onClick={() => openLightbox(media.indexOf(heroMedia[heroIndex]))}
+            onLoad={(e) => {
+              if (work.heroPortrait === undefined) {
+                setHeroPortrait(e.currentTarget.naturalHeight > e.currentTarget.naturalWidth);
+              }
+            }}
             className={`absolute top-0 left-[7.109375vw] h-[44.565679vw] w-[79.166667vw] cursor-zoom-in ${heroPortrait ? "object-contain" : "object-cover"}`}
           />
         )}
@@ -128,13 +155,13 @@ export default function WorkDetail({
           </p>
         </div>
 
-        {total > 0 && (
+        {heroTotal > 0 && (
           <ScrollNav
             current={heroIndex + 1}
-            total={total}
+            total={heroTotal}
             onUp={heroPrev}
             onDown={heroNext}
-            disabled={arrowsDisabled}
+            disabled={heroArrowsDisabled}
             className="absolute right-0 bottom-[4.010417vw]"
           />
         )}
@@ -149,16 +176,16 @@ export default function WorkDetail({
             <p className="w-[11.40625vw] shrink-0 pl-[0.520833vw] text-[1.25vw] leading-[2.1875vw] font-bold">
               Description
             </p>
-            <div className="flex w-[48.489583vw] flex-col gap-[1.2vw] text-[1.145833vw] leading-[2.1875vw] font-bold">
+            <div className="flex w-[48.489583vw] flex-col gap-[1.2vw] text-[1.145833vw] font-[550] text-white/80">
               {description.en && (
-                <div className="flex flex-col gap-[0.4vw]">
+                <div className="flex flex-col gap-[0.4vw] leading-[1.85vw]">
                   {description.en
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`en-${i}`}>{p}</p>)}
                 </div>
               )}
               {description.ko && (
-                <div className="flex flex-col gap-[0.4vw]">
+                <div className="flex flex-col gap-[0.4vw] leading-[1.95vw]">
                   {description.ko
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`ko-${i}`}>{p}</p>)}
@@ -180,7 +207,7 @@ export default function WorkDetail({
                 {work.credit.map((c, i) => (
                   <div
                     key={`${c.role}-${i}`}
-                    className="flex items-center justify-between text-[1.25vw] leading-[2.864583vw] font-bold"
+                    className="flex items-center justify-between text-[1.25vw] leading-[2.864583vw] font-[550] text-white/80"
                   >
                     <p>{c.role}</p>
                     <p className="pr-[0.78125vw]">{c.name}</p>
@@ -192,8 +219,9 @@ export default function WorkDetail({
         )}
 
         {/* Stacked detail images — only when the work has more than 8 images.
-            Capped at STACKED_LIMIT via a slug-seeded shuffle so the same subset
-            (in original order) shows on every load, rather than all of them. */}
+            Uses work.stackedMedia if set (explicit curation), otherwise falls
+            back to a slug-seeded shuffle capped at STACKED_LIMIT so the same
+            subset (in original order) shows on every load. */}
         {showStacked && (
           <div className="flex flex-col gap-[6.25vw]">
             <Divider />

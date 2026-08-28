@@ -18,6 +18,9 @@ export type WorkMeta = {
   credit?: WorkCredit[];
   videoUrl?: string;
   featured?: boolean;
+  heroMedia?: string[];
+  stackedMedia?: string[];
+  heroPortrait?: boolean;
 };
 
 const MEDIA_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp"]);

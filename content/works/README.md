@@ -24,7 +24,10 @@ kebab-case. 정렬 편의를 위해 연도 prefix 권장: `2026-nightscape-portr
 | `heroCover` | string | 홈 히어로 캐러셀 전용 대표 이미지 경로 (옵션, 없으면 `cover` 사용) |
 | `order` | number | Works 그리드 정렬 우선순위 (낮을수록 먼저, 옵션) |
 | `credit` | `{role, name}[]` | 상세페이지 CREDIT 섹션 (예: `{"role": "All by", "name": "UZUN CHOI"}`, 옵션, 비어있으면 섹션 자체 숨김) |
-| `videoUrl` | string | 실제 영상 링크(유튜브 등). 있으면 상세페이지 마지막 이미지에 재생 버튼 + "OPEN IN YOUTUBE" 오버레이 표시 (옵션) |
+| `videoUrl` | string | 실제 영상 링크(유튜브 등). 있으면 상세페이지 하단 스택 이미지 다음에 유튜브 임베드 표시 (옵션) |
+| `heroMedia` | string[] | 상세페이지 상단 히어로 캐러셀에 노출할 이미지 목록 (`media/` 기준 상대경로, 순서대로). 옵션 — 없으면 `media/`의 전체 이미지를 순서대로 사용 |
+| `stackedMedia` | string[] | 상세페이지 하단 스택 섹션에 고정으로 노출할 이미지 목록 (`media/` 기준 상대경로, 순서대로). 옵션 — 없으면 이미지가 8장 넘을 때 슬러그 기반 고정 랜덤으로 최대 7장을 골라 보여줌 |
+| `heroPortrait` | boolean | 히어로 이미지를 세로 사진처럼 처리(크롭 없는 `object-contain`)할지 강제 지정. 옵션 — 없으면 실제 이미지 가로/세로 비율로 자동 판별(정사각형 등 애매한 비율을 세로처럼 보이고 싶을 때 사용) |
 
 ## media/
 파일명에 번호를 붙여 노출 순서를 명시한다 (`01_cover.jpg`, `02_detail.gif`, `03_process.mp4`).
