@@ -8,6 +8,10 @@
   "category": [
     "photo"
   ],
-  "cover": "media/01_ADP_BA-B_-.jpg",
-  "order": 15
+  "cover": "media/02__BA_A.jpg",
+  "order": 15,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Special Thanks to", "name": "옥지민, ds0n, 2sh" }
+  ]
 }

@@ -1,1 +1,1 @@
-A practice shoot for an editorial magazine cover, with model Ok Jimin. Built on standard lighting, the direction leaned into the model's allure and captivating mood to capture the feel of Harper's BAZAAR. Handled the entire process — shooting, retouching, and cover composition.
+A practice shoot for an editorial magazine cover, with model Ok Jimin. Built on standard lighting, the direction leaned into the model's allure and captivating mood to capture the feel of Harper's BAZAAR. Handled the entire process — shooting, retouching, and cover work.

@@ -10,5 +10,6 @@
   ],
   "cover": "media/01_EP-01.jpg",
   "order": 14,
-  "featured": true
+  "featured": true,
+  "heroPortrait": true
 }

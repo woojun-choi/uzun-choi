@@ -9,5 +9,12 @@
     "film"
   ],
   "cover": "media/12_5.jpg",
-  "order": 5
+  "order": 5,
+  "credit": [
+    { "role": "Directed by", "name": "UZUN" },
+    { "role": "Screenplay by", "name": "UZUN" },
+    { "role": "Filmed by", "name": "UZUN" },
+    { "role": "VFX by", "name": "UZUN" },
+    { "role": "Special Thanks to", "name": "Team 0000, Kihoon, Siz" }
+  ]
 }

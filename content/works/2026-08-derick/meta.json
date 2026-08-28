@@ -9,5 +9,10 @@
     "photo"
   ],
   "cover": "media/01_1.jpg",
-  "order": 9
+  "order": 9,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Photo by", "name": "UZUN" },
+    { "role": "Model", "name": "Derrick Kakooza" }
+  ]
 }

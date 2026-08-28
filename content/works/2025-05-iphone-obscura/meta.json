@@ -11,5 +11,24 @@
   "cover": "media/12_basic_photography_exhibition_04.jpg",
   "heroCover": "media/14_basic_photography_exhibition_10.jpg",
   "order": 18,
-  "featured": true
+  "featured": true,
+  "heroMedia": [
+    "media/14_basic_photography_exhibition_10.jpg",
+    "media/15_basic_photography_exhibition_11.jpg",
+    "media/12_basic_photography_exhibition_04.jpg",
+    "media/11_basic_photography_exhibition_02.jpg",
+    "media/13_basic_photography_exhibition_07.jpg"
+  ],
+  "stackedMedia": [
+    "media/01_095.jpg",
+    "media/02_096.jpg",
+    "media/03_097.jpg",
+    "media/04_098.jpg",
+    "media/05_099.jpg",
+    "media/06_100.jpg",
+    "media/07_101.jpg",
+    "media/08_102.jpg",
+    "media/09_103.jpg",
+    "media/10_104.jpg"
+  ]
 }

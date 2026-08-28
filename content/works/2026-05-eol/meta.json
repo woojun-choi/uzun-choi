@@ -10,5 +10,10 @@
   ],
   "cover": "media/01_1.jpg",
   "order": 12,
-  "featured": true
+  "featured": true,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Photo by", "name": "UZUN" },
+    { "role": "Model", "name": "E-OL" }
+  ]
 }

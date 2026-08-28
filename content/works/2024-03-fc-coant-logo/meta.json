@@ -9,5 +9,6 @@
     "design"
   ],
   "cover": "media/01_2024-03---1.png",
-  "order": 25
+  "order": 25,
+  "heroPortrait": true
 }

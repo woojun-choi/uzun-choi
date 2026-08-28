@@ -9,5 +9,8 @@
     "design"
   ],
   "cover": "media/01_.png",
-  "order": 16
+  "order": 16,
+  "credit": [
+    { "role": "Work by", "name": "Team 녹녹" }
+  ]
 }

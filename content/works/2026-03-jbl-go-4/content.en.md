@@ -1,1 +1,1 @@
-Product photography of the JBL GO 4 speaker, shot as electronics-photography practice. Composed of a moody ad-style shot with water droplets and a clean studio shot. Handled the shoot, lighting, and retouching independently.
+A coursework assignment shooting product ad photography for the JBL GO 4 speaker. Composed of a shot emphasizing its waterproof feature and a clean cutout shot.

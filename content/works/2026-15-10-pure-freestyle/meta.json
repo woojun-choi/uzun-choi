@@ -12,10 +12,10 @@
   "order": 2,
   "credit": [
     { "role": "Artist", "name": "chansimoto" },
-    { "role": "Directed By", "name": "Siz" },
-    { "role": "Camera & Lighting By", "name": "UZUN, Kihoon" },
-    { "role": "Edited By", "name": "Siz" },
-    { "role": "Recorded, Mixed & Mastered By", "name": "Siz" }
+    { "role": "Directed by", "name": "Siz" },
+    { "role": "Camera & Lighting by", "name": "UZUN, Kihoon" },
+    { "role": "Edited by", "name": "Siz" },
+    { "role": "Recorded, Mixed & Mastered by", "name": "Siz" }
   ],
   "videoUrl": "https://youtu.be/YYOSLc0MZYQ"
 }

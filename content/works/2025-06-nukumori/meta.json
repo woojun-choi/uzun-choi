@@ -9,5 +9,6 @@
     "photo"
   ],
   "cover": "media/01_2025-06---1.png",
-  "order": 17
+  "order": 17,
+  "heroPortrait": true
 }

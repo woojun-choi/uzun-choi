@@ -9,5 +9,10 @@
     "photo"
   ],
   "cover": "media/01_lighting-magazine-jimin5.jpg",
-  "order": 19
+  "order": 19,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Photo by", "name": "UZUN" },
+    { "role": "Model", "name": "옥지민" }
+  ]
 }

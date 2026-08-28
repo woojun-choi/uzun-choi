@@ -9,5 +9,32 @@
     "editorial"
   ],
   "cover": "media/01_2026-13---1.jpg",
-  "order": 4
+  "order": 4,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Photo by", "name": "UZUN" },
+    { "role": "Editorial by", "name": "UZUN" },
+    { "role": "Special Thanks to", "name": "Movie Land" }
+  ],
+  "heroMedia": [
+    "media/01_2026-13---1.jpg",
+    "media/02_2026-13---2.jpg",
+    "media/03_2026-13---3.jpg",
+    "media/04_2026-13---4.jpg",
+    "media/05_2026-13---5.jpg",
+    "media/06_2026-13---6.jpg",
+    "media/07_2026-13---7.jpg"
+  ],
+  "stackedMedia": [
+    "media/09___02.jpg",
+    "media/10___03.jpg",
+    "media/11___04.jpg",
+    "media/12___05.jpg",
+    "media/13___06.jpg",
+    "media/14___07.jpg",
+    "media/15___08.jpg",
+    "media/16___09.jpg",
+    "media/17___10.jpg",
+    "media/18___11.jpg"
+  ]
 }

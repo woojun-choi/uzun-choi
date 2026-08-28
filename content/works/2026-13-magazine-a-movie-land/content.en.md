@@ -1,1 +1,1 @@
-A photo-documentary issue of the personal magazine Magazine A, introducing Movie Land, an independent cinema in Seongsu-dong. Reworked the self-shot documentary photographs into a magazine layout, designing the cover and pages directly.
+An issue of the personal magazine Magazine A, introducing Movie Land, a cinema in Seongsu-dong. Handled everything from planning to layout and editing.

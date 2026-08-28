@@ -9,5 +9,10 @@
     "photo"
   ],
   "cover": "media/01_1.jpg",
-  "order": 10
+  "order": 10,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Photo by", "name": "UZUN" },
+    { "role": "Model", "name": "변정훈" }
+  ]
 }

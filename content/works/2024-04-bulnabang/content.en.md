@@ -1,1 +1,1 @@
-Album cover photograph for artist Park Hosu's 《Bulnabang (불나방, Moth)》. Handled both the shoot and retouching. A figure captured mid-fall against a white void, visualizing a moth's pull toward the flame.
+Album cover photograph for artist Park Hosu's 《Bulnabang (불나방, Moth)》.

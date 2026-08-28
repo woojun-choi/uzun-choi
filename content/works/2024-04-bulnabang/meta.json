@@ -9,5 +9,11 @@
     "photo"
   ],
   "cover": "media/01_2024-04---1.png",
-  "order": 24
+  "order": 24,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Photo by", "name": "UZUN" },
+    { "role": "Artwork by", "name": "UZUN" },
+    { "role": "Artist", "name": "박호수" }
+  ]
 }

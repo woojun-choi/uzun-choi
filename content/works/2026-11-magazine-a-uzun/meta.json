@@ -9,5 +9,31 @@
     "editorial"
   ],
   "cover": "media/01_2026-11---1.jpg",
-  "order": 6
+  "order": 6,
+  "heroPortrait": true,
+  "heroMedia": [
+    "media/01_2026-11---1.jpg",
+    "media/02_2026-11---10.jpg",
+    "media/03_2026-11---11.jpg",
+    "media/04_2026-11---2.jpg",
+    "media/05_2026-11---3.jpg",
+    "media/06_2026-11---4.jpg",
+    "media/07_2026-11---5.jpg",
+    "media/08_2026-11---6.jpg",
+    "media/09_2026-11---8.jpg",
+    "media/10_2026-11---9.jpg",
+    "media/11__A-magazine__1_A-magazine__1_01.jpg"
+  ],
+  "stackedMedia": [
+    "media/69__A-magazine__1_A-magazine__1_1.jpg",
+    "media/14__A-magazine__1_A-magazine__1_04.jpg",
+    "media/19__A-magazine__1_A-magazine__1_09.jpg",
+    "media/20__A-magazine__1_A-magazine__1_10.jpg",
+    "media/25__A-magazine__1_A-magazine__1_15.jpg",
+    "media/30__A-magazine__1_A-magazine__1_20.jpg",
+    "media/34__A-magazine__1_A-magazine__1_24.jpg",
+    "media/36__A-magazine__1_A-magazine__1_26.jpg",
+    "media/40__A-magazine__1_A-magazine__1_30.jpg",
+    "media/61__A-magazine__1_A-magazine__1_51.jpg"
+  ]
 }

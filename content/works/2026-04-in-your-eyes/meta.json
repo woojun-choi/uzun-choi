@@ -9,5 +9,11 @@
     "photo"
   ],
   "cover": "media/01_260513_cover_final.jpg",
-  "order": 13
+  "order": 13,
+  "heroPortrait": true,
+  "credit": [
+    { "role": "Artwork by", "name": "UZUN" },
+    { "role": "Photo by", "name": "UZUN" },
+    { "role": "Model", "name": "강이올" }
+  ]
 }
