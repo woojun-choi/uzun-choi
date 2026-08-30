@@ -10,5 +10,7 @@
   ],
   "cover": "media/01___.jpg",
   "order": 23,
-  "featured": true
+  "featured": true,
+  "featuredMobile": true,
+  "mobileOrder": 10
 }

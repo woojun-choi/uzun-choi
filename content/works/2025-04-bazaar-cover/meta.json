@@ -14,5 +14,7 @@
   "credit": [
     { "role": "Photo by", "name": "UZUN" },
     { "role": "Model", "name": "옥지민" }
-  ]
+  ],
+  "featuredMobile": true,
+  "mobileOrder": 9
 }

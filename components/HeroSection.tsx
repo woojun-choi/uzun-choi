@@ -31,8 +31,8 @@ function Slide({ item, index, priority }: { item: HeroSlide; index: number; prio
           className="pointer-events-none object-cover"
         />
       )}
-      <div className="absolute bottom-[9.5922vw] left-[9.23077vw] z-10 flex max-w-[62vw] flex-col items-end gap-[0.84vw] text-white md:max-w-none md:flex-row md:items-start md:bottom-[4.01042vw] md:left-[4.42708vw] md:gap-[0.41667vw]">
-        <p className="order-2 text-right text-[10.25641vw] leading-none font-bold md:order-1 md:text-left md:text-[5.20833vw]">{item.title}</p>
+      <div className="absolute bottom-[9.5922vw] left-[9.23077vw] z-10 flex max-w-[62vw] flex-col items-start gap-[0.84vw] text-white md:max-w-none md:flex-row md:bottom-[4.01042vw] md:left-[4.42708vw] md:gap-[0.41667vw]">
+        <p className="order-2 text-left text-[10.25641vw] leading-none font-bold md:order-1 md:text-[5.20833vw]">{item.title}</p>
         <p
           className="order-1 hidden text-[3.58974vw] leading-none md:order-2 md:block md:text-[1.5625vw]"
           style={{ fontFamily: '"NEXON Lv2 Gothic"', fontWeight: 400 }}
@@ -44,7 +44,7 @@ function Slide({ item, index, priority }: { item: HeroSlide; index: number; prio
   );
 }
 
-export default function HeroSection({ items }: { items: HeroSlide[] }) {
+function Carousel({ items }: { items: HeroSlide[] }) {
   const total = items.length;
   // Clone the last item before the first, and the first item after the last,
   // so wrap-around transitions keep scrolling in the same direction instead
@@ -129,5 +129,24 @@ export default function HeroSection({ items }: { items: HeroSlide[] }) {
       </div>
       <ScrollNav current={current} total={total} onUp={() => step(-1)} onDown={() => step(1)} />
     </div>
+  );
+}
+
+export default function HeroSection({
+  items,
+  mobileItems,
+}: {
+  items: HeroSlide[];
+  mobileItems: HeroSlide[];
+}) {
+  return (
+    <>
+      <div className="md:hidden">
+        <Carousel items={mobileItems} />
+      </div>
+      <div className="hidden md:block">
+        <Carousel items={items} />
+      </div>
+    </>
   );
 }

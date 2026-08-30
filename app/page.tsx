@@ -1,11 +1,9 @@
 import HeroSection, { type HeroSlide } from "@/components/HeroSection";
-import { getFeaturedWorks, workHeroCoverUrl } from "@/lib/works";
+import { getFeaturedWorks, getFeaturedMobileWorks, workHeroCoverUrl, type WorkMeta } from "@/lib/works";
 
 const HERO_SLOT_COUNT = 5;
 
-export default function Home() {
-  const works = getFeaturedWorks();
-
+function buildSlides(works: WorkMeta[]): HeroSlide[] {
   const realSlides: HeroSlide[] = works.map((work) => ({
     id: work.slug,
     title: work.title.ko,
@@ -22,5 +20,14 @@ export default function Home() {
     })
   );
 
-  return <HeroSection items={[...realSlides, ...dummySlides]} />;
+  return [...realSlides, ...dummySlides];
+}
+
+export default function Home() {
+  return (
+    <HeroSection
+      items={buildSlides(getFeaturedWorks())}
+      mobileItems={buildSlides(getFeaturedMobileWorks())}
+    />
+  );
 }

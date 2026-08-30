@@ -15,5 +15,7 @@
     { "role": "Photo by", "name": "UZUN" },
     { "role": "Artwork by", "name": "UZUN" },
     { "role": "Artist", "name": "박호수" }
-  ]
+  ],
+  "featuredMobile": true,
+  "mobileOrder": 11
 }

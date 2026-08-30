@@ -14,5 +14,7 @@
   "credit": [
     { "role": "Photo by", "name": "UZUN" },
     { "role": "Model", "name": "Derrick Kakooza" }
-  ]
+  ],
+  "featuredMobile": true,
+  "mobileOrder": 4
 }

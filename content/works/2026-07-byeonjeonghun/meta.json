@@ -14,5 +14,7 @@
   "credit": [
     { "role": "Photo by", "name": "UZUN" },
     { "role": "Model", "name": "변정훈" }
-  ]
+  ],
+  "featuredMobile": true,
+  "mobileOrder": 6
 }

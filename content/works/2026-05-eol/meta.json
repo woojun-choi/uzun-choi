@@ -15,5 +15,7 @@
   "credit": [
     { "role": "Photo by", "name": "UZUN" },
     { "role": "Model", "name": "E-OL" }
-  ]
+  ],
+  "featuredMobile": true,
+  "mobileOrder": 8
 }

@@ -18,6 +18,8 @@ export type WorkMeta = {
   credit?: WorkCredit[];
   videoUrl?: string;
   featured?: boolean;
+  featuredMobile?: boolean;
+  mobileOrder?: number;
   heroMedia?: string[];
   stackedMedia?: string[];
   heroPortrait?: boolean;
@@ -43,6 +45,12 @@ export function getAllWorks(): WorkMeta[] {
 
 export function getFeaturedWorks(): WorkMeta[] {
   return getAllWorks().filter((work) => work.featured);
+}
+
+export function getFeaturedMobileWorks(): WorkMeta[] {
+  return getAllWorks()
+    .filter((work) => work.featuredMobile)
+    .sort((a, b) => (a.mobileOrder ?? 0) - (b.mobileOrder ?? 0));
 }
 
 export function getWork(slug: string): WorkMeta | undefined {
