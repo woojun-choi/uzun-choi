@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ScrollNav from "./ScrollNav";
+import { useSwipe } from "@/lib/useSwipe";
 
 const TRANSITION_MS = 900;
 const AUTO_ADVANCE_MS = 10000;
@@ -14,7 +15,7 @@ export type HeroSlide = {
   cover?: string;
 };
 
-function Slide({ item, index }: { item: HeroSlide; index: number }) {
+function Slide({ item, index, priority }: { item: HeroSlide; index: number; priority: boolean }) {
   return (
     <section
       className="relative flex h-screen w-full items-center justify-center overflow-hidden"
@@ -25,14 +26,15 @@ function Slide({ item, index }: { item: HeroSlide; index: number }) {
           src={item.cover}
           alt={item.title}
           fill
-          priority={index === 0}
+          priority={priority}
+          unoptimized
           className="pointer-events-none object-cover"
         />
       )}
-      <div className="absolute bottom-[4.01042vw] left-[4.42708vw] z-10 flex items-start gap-[0.41667vw] text-white">
-        <p className="font-bold text-[5.20833vw] leading-none">{item.title}</p>
+      <div className="absolute bottom-[9.5922vw] left-[9.23077vw] z-10 flex max-w-[62vw] flex-col items-end gap-[0.84vw] text-white md:max-w-none md:flex-row md:items-start md:bottom-[4.01042vw] md:left-[4.42708vw] md:gap-[0.41667vw]">
+        <p className="order-2 text-right text-[10.25641vw] leading-none font-bold md:order-1 md:text-left md:text-[5.20833vw]">{item.title}</p>
         <p
-          className="text-[1.5625vw] leading-none"
+          className="order-1 hidden text-[3.58974vw] leading-none md:order-2 md:block md:text-[1.5625vw]"
           style={{ fontFamily: '"NEXON Lv2 Gothic"', fontWeight: 400 }}
         >
           {item.year}
@@ -97,6 +99,8 @@ export default function HeroSection({ items }: { items: HeroSlide[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [total]);
 
+  useSwipe(containerRef, (direction) => step(direction), { axis: "y" });
+
   useEffect(() => {
     const timer = window.setTimeout(() => step(1), AUTO_ADVANCE_MS);
     return () => window.clearTimeout(timer);
@@ -115,7 +119,12 @@ export default function HeroSection({ items }: { items: HeroSlide[] }) {
         }}
       >
         {extended.map((item, i) => (
-          <Slide key={`${item.id}-${i}`} item={item} index={i} />
+          <Slide
+            key={`${item.id}-${i}`}
+            item={item}
+            index={i}
+            priority={total > 1 ? i === 1 : i === 0}
+          />
         ))}
       </div>
       <ScrollNav current={current} total={total} onUp={() => step(-1)} onDown={() => step(1)} />

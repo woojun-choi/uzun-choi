@@ -23,6 +23,7 @@ export default function CopyEmailLink({
   email,
   className,
   toastOffsetVw = 3.4,
+  onClick,
 }: {
   email: string;
   className?: string;
@@ -30,6 +31,8 @@ export default function CopyEmailLink({
    *  up to the toast — tuned per usage to land near that layout's divider
    *  bar above the email. */
   toastOffsetVw?: number;
+  /** Fires alongside the copy behavior — e.g. to reveal extra info nearby. */
+  onClick?: () => void;
 }) {
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<number | null>(null);
@@ -47,6 +50,7 @@ export default function CopyEmailLink({
     fallbackCopy(email);
     showCopiedToast();
     navigator.clipboard?.writeText?.(email).catch(() => {});
+    onClick?.();
   };
 
   return (
@@ -55,8 +59,8 @@ export default function CopyEmailLink({
         {email}
       </button>
       <span
-        className={`pointer-events-none absolute left-1/2 origin-center -translate-x-1/2 translate-y-1/2 whitespace-nowrap bg-white px-[0.83333vw] py-[0.3125vw] text-[0.72917vw] font-medium text-black transition-all duration-[400ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
-          copied ? "scale-100 opacity-100" : "scale-0 opacity-0"
+        className={`pointer-events-none absolute left-1/2 hidden origin-center -translate-x-1/2 translate-y-1/2 whitespace-nowrap bg-white px-[2.05128vw] py-[0.76923vw] text-[1.79487vw] font-medium text-black transition-all duration-[400ms] ease-[cubic-bezier(0.19,1,0.22,1)] md:block md:px-[0.83333vw] md:py-[0.3125vw] md:text-[0.72917vw] ${
+          copied ? "md:scale-100 md:opacity-100" : "md:scale-0 md:opacity-0"
         }`}
         style={{ bottom: `calc(100% + ${toastOffsetVw}vw)` }}
       >

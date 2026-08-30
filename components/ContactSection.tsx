@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import CopyEmailLink from "./CopyEmailLink";
 
+const MOBILE_INFO_STAY_MS = 3500;
 const OFFSET_Y_DESIGN = 50; // px at 1920 design width
 const SENSITIVITY_X = 1.8; // how much further the box swings left/right vs. the raw cursor range
 const SENSITIVITY_Y = 1.4; // how much further the box swings down vs. the raw cursor range
@@ -13,9 +14,23 @@ const SWING_EASE = 0.05; // slower, separate ease for the left/right swing so it
 
 export default function ContactSection() {
   const [hovering, setHovering] = useState(false);
+  const [mobileInfoShown, setMobileInfoShown] = useState(false);
+  const mobileInfoTimeoutRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
+
+  const showMobileInfoBriefly = () => {
+    setMobileInfoShown(true);
+    if (mobileInfoTimeoutRef.current) window.clearTimeout(mobileInfoTimeoutRef.current);
+    mobileInfoTimeoutRef.current = window.setTimeout(() => setMobileInfoShown(false), MOBILE_INFO_STAY_MS);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (mobileInfoTimeoutRef.current) window.clearTimeout(mobileInfoTimeoutRef.current);
+    };
+  }, []);
 
   const mouseRef = useRef({ x: 0, y: 0 });
   const easedRef = useRef({ x: 0, y: 0 });
@@ -117,7 +132,60 @@ export default function ContactSection() {
   };
 
   return (
-    <main className="flex h-screen items-center justify-center overflow-hidden bg-[#0c0c0c] text-white">
+    <main className="relative flex min-h-screen flex-col items-center bg-[#0c0c0c] text-white md:h-screen md:justify-center md:overflow-hidden">
+      {/* Mobile: static layout, no cursor-follow (Figma "M 5. Contact" has no hover
+          interaction — there's no cursor on touch, so the info text is always shown).
+          Each block is pinned to its exact Figma top offset (measured from the
+          content area right below the header) instead of stacked via estimated
+          gaps — text line-height guesses were drifting the whole layout down. */}
+      <div className="relative w-full flex-1 md:hidden">
+        <div className="absolute inset-x-0 top-[55.8974vw] flex flex-col items-center gap-[2.05128vw] px-[5.12821vw] text-center">
+          <p className="text-[4.61538vw] font-bold text-white">
+            새로운 프로젝트를 함께할 준비가 되어 있습니다.
+          </p>
+          <p className="text-[4.10256vw] font-medium text-white/70">
+            Ready for the next project.
+          </p>
+        </div>
+        <div className="absolute top-[74.8308vw] left-1/2 h-px w-[3.67846vw] -translate-x-1/2 bg-white/40" />
+        <div className="absolute top-[80.2564vw] left-1/2 flex w-[40.8618vw] -translate-x-1/2 flex-col items-center gap-[3.58974vw]">
+          <CopyEmailLink
+            email="uzunchoi@gmail.com"
+            className="text-[4.61538vw] font-bold text-white/90"
+            toastOffsetVw={8}
+            onClick={showMobileInfoBriefly}
+          />
+          <a
+            href="https://www.instagram.com/uzunchoi/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="flex size-[4.61538vw] items-center justify-center opacity-80"
+          >
+            <Image src="/assets/icons/ig.svg" alt="" width={30} height={30} className="size-[4.61538vw]" />
+          </a>
+        </div>
+        <div
+          className={`absolute top-[105vw] left-1/2 flex -translate-x-1/2 flex-col items-center gap-[1.53846vw] whitespace-nowrap text-center transition-opacity duration-300 ${
+            mobileInfoShown ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+        >
+          <p className="text-[2.82051vw] leading-[3.99408vw] font-bold text-white">
+            프로젝트 및 기타 문의는 메일 주소로 연락주시면 검토 후 회신 드리겠습니다.
+          </p>
+          <p className="text-[2.5641vw] leading-[3.97436vw] font-medium text-white/70">
+            For project or other inquiries, please contact me at the email address.
+            <br />
+            I&apos;ll get back to you.
+          </p>
+        </div>
+      </div>
+      <p className="absolute inset-x-0 bottom-[6.41026vw] text-center text-[2.30769vw] text-white md:hidden">
+        © 2026 UZUN. All rights reserved.
+      </p>
+
+      {/* Desktop: mouse-follow interactive layout (unchanged). */}
+      <div className="hidden h-full w-full items-center justify-center md:flex">
       <div className="flex flex-col items-center gap-[2.34375vw]">
         <div className="flex flex-col items-center gap-[0.78125vw] text-center">
           <p className="text-[2.08333vw] font-bold text-white">
@@ -181,6 +249,7 @@ export default function ContactSection() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </main>
   );

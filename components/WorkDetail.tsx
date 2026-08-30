@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ScrollNav from "./ScrollNav";
 import type { WorkMeta } from "@/lib/works";
+import { useSwipe } from "@/lib/useSwipe";
 
 function Divider() {
   return <div className="h-px w-full bg-white/15" />;
@@ -89,6 +90,10 @@ export default function WorkDetail({
 
   const heroPrev = () => setHeroIndex((i) => (i - 1 + heroTotal) % heroTotal);
   const heroNext = () => setHeroIndex((i) => (i + 1) % heroTotal);
+  const heroCarouselRef = useRef<HTMLDivElement>(null);
+  useSwipe(heroCarouselRef, (direction) => setHeroIndex((i) => (i + direction + heroTotal) % heroTotal), {
+    axis: "x",
+  });
   const openLightbox = (i: number) => {
     setLightbox(i);
     setIsZoomed(false);
@@ -120,11 +125,15 @@ export default function WorkDetail({
   };
 
   return (
-    <main className="bg-[#0c0c0c] pt-[7.291667vw] text-white">
-      {/* Carousel — fixed-size box (1520x855.66 @1920 baseline). Landscape images
-          object-cover (crop, fills box, per Figma). Portrait images object-contain
-          (fit to box height, no crop, pillarboxed on the same dark background). */}
-      <div className="relative mx-auto h-[46.354167vw] w-[93.385417vw]">
+    <main className="bg-[#0c0c0c] pt-[28.20513vw] text-white md:pt-[7.291667vw]">
+      {/* Carousel — fixed-size box (1520x855.66 @1920 baseline; 342x520 @390
+          mobile). Landscape images object-cover (crop, fills box, per Figma).
+          Portrait images object-contain (fit to box height, no crop,
+          pillarboxed on the same dark background). */}
+      <div
+        ref={heroCarouselRef}
+        className="relative mx-auto h-[147.6923vw] w-[92.8205vw] md:h-[46.354167vw] md:w-[93.385417vw]"
+      >
         {heroTotal > 0 && (
           // eslint-disable-next-line @next/next/no-img-element -- fixed box, orientation-aware fit
           <img
@@ -136,19 +145,19 @@ export default function WorkDetail({
                 setHeroPortrait(e.currentTarget.naturalHeight > e.currentTarget.naturalWidth);
               }
             }}
-            className={`absolute top-0 left-[7.109375vw] h-[44.565679vw] w-[79.166667vw] cursor-zoom-in ${heroPortrait ? "object-contain" : "object-cover"}`}
+            className={`absolute top-0 left-[2.5641vw] h-[133.3333vw] w-[87.6923vw] cursor-zoom-in md:left-[7.109375vw] md:h-[44.565679vw] md:w-[79.166667vw] ${heroPortrait ? "object-contain" : "object-cover"}`}
           />
         )}
 
-        <div className="absolute bottom-[4.010417vw] left-0 flex items-start gap-[0.416667vw]">
+        <div className="absolute top-[141.0256vw] left-[3.33333vw] flex max-w-[65vw] flex-col items-end gap-[0.84vw] md:max-w-none md:flex-row md:items-start md:top-auto md:bottom-[4.010417vw] md:left-0 md:gap-[0.416667vw]">
           <h1
-            className="text-[5.208333vw] leading-none font-bold"
+            className="order-2 text-right text-[10.25641vw] leading-[11.79487vw] font-bold md:order-1 md:text-left md:text-[5.208333vw] md:leading-none"
             style={{ textShadow: "1px 1px 0 rgba(0,0,0,0.1)" }}
           >
             {work.title.ko}
           </h1>
           <p
-            className="text-[1.5625vw] font-bold"
+            className="order-1 hidden text-[3.58974vw] font-bold md:order-2 md:block md:text-[1.5625vw]"
             style={{ fontFamily: '"NEXON Lv2 Gothic"', textShadow: "1px 1px 0 rgba(0,0,0,0.1)" }}
           >
             {work.year}
@@ -162,30 +171,30 @@ export default function WorkDetail({
             onUp={heroPrev}
             onDown={heroNext}
             disabled={heroArrowsDisabled}
-            className="absolute right-0 bottom-[4.010417vw]"
+            className="absolute top-[145.09151vw] right-[4.05897vw] md:top-auto md:right-0 md:bottom-[4.010417vw]"
           />
         )}
       </div>
 
       {/* Body */}
-      <div className="mx-auto flex w-[93.90625vw] flex-col gap-[6.25vw] pt-[10.41667vw] pb-[3.125vw]">
+      <div className="mx-auto flex w-[93.90625vw] flex-col gap-[6.25vw] pt-[42.0513vw] pb-[3.125vw] md:pt-[10.41667vw]">
         {/* Description */}
         <div className="flex flex-col gap-[3.125vw]">
           <Divider />
-          <div className="flex items-start justify-between">
-            <p className="w-[11.40625vw] shrink-0 pl-[0.520833vw] text-[1.25vw] leading-[2.1875vw] font-bold">
+          <div className="flex flex-col gap-[5.12821vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0">
+            <p className="shrink-0 text-[3.33333vw] font-bold md:w-[11.40625vw] md:pl-[0.520833vw] md:text-[1.25vw] md:leading-[2.1875vw]">
               Description
             </p>
-            <div className="flex w-[48.489583vw] flex-col gap-[1.2vw] text-[1.145833vw] font-[550] text-white/80">
+            <div className="flex flex-col gap-[1.53846vw] text-[2.5641vw] font-medium text-white/80 md:w-[48.489583vw] md:gap-[1.2vw] md:text-[1.145833vw] md:font-[550]">
               {description.en && (
-                <div className="flex flex-col gap-[0.4vw] leading-[1.85vw]">
+                <div className="flex flex-col gap-[0.4vw] leading-[3.84615vw] md:leading-[1.85vw]">
                   {description.en
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`en-${i}`}>{p}</p>)}
                 </div>
               )}
               {description.ko && (
-                <div className="flex flex-col gap-[0.4vw] leading-[1.95vw]">
+                <div className="flex flex-col gap-[0.4vw] leading-[4.10256vw] md:leading-[1.95vw]">
                   {description.ko
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`ko-${i}`}>{p}</p>)}
@@ -199,15 +208,15 @@ export default function WorkDetail({
         {work.credit && work.credit.length > 0 && (
           <div className="flex flex-col gap-[3.125vw]">
             <Divider />
-            <div className="flex items-start justify-between pl-[0.520833vw]">
-              <p className="text-[1.25vw] font-bold whitespace-nowrap">
+            <div className="flex flex-col gap-[5.12821vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0 md:pl-[0.520833vw]">
+              <p className="text-[3.33333vw] font-bold whitespace-nowrap md:text-[1.25vw]">
                 Credit
               </p>
-              <div className="flex w-[48.645833vw] flex-col gap-[0.520833vw]">
+              <div className="flex flex-col gap-[2.05128vw] md:w-[48.645833vw] md:gap-[0.520833vw]">
                 {work.credit.map((c, i) => (
                   <div
                     key={`${c.role}-${i}`}
-                    className="flex items-center justify-between text-[1.25vw] leading-[2.864583vw] font-[550] text-white/80"
+                    className="flex items-center justify-between text-[2.5641vw] font-medium text-white/80 md:text-[1.25vw] md:leading-[2.864583vw] md:font-[550]"
                   >
                     <p>{c.role}</p>
                     <p className="pr-[0.78125vw]">{c.name}</p>
@@ -255,7 +264,7 @@ export default function WorkDetail({
         {/* Copyright */}
         <div className="flex flex-col items-center gap-[13.75vw]">
           <Divider />
-          <p className="text-center text-[1.041667vw] text-white">
+          <p className="text-center text-[2.30769vw] text-white md:text-[1.041667vw]">
             © 2026 UZUN. All rights reserved.
           </p>
         </div>
@@ -265,14 +274,14 @@ export default function WorkDetail({
       {lightbox !== null && total > 0 && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95">
           {/* Same vertical band + right padding as Header, so this X lines up exactly with the header's X */}
-          <div className="absolute top-0 right-0 z-10 flex h-[8.85417vw] items-center pr-[4.42708vw]">
+          <div className="absolute top-0 right-0 z-10 flex h-[28.20513vw] items-center pr-[7.69231vw] md:h-[8.85417vw] md:pr-[4.42708vw]">
             <button type="button" onClick={closeLightbox} aria-label="닫기">
               <Image
                 src="/assets/icons/close-x.svg"
                 alt=""
                 width={35}
                 height={35}
-                className="w-[1.82292vw] rotate-45"
+                className="w-[8.97436vw] rotate-45 md:w-[1.82292vw]"
               />
             </button>
           </div>
@@ -280,28 +289,28 @@ export default function WorkDetail({
             type="button"
             onClick={lightboxPrev}
             aria-label="이전"
-            className="absolute top-1/2 left-[4.42708vw] z-10 -translate-y-1/2 rotate-90"
+            className="absolute top-1/2 left-[7.69231vw] z-10 -translate-y-1/2 rotate-90 md:left-[4.42708vw]"
           >
             <Image
               src="/assets/icons/chevron-down.svg"
               alt=""
               width={26}
               height={14}
-              className="w-[1.354167vw]"
+              className="w-[6.41026vw] md:w-[1.354167vw]"
             />
           </button>
           <button
             type="button"
             onClick={lightboxNext}
             aria-label="다음"
-            className="absolute top-1/2 right-[4.42708vw] z-10 -translate-y-1/2 -rotate-90"
+            className="absolute top-1/2 right-[7.69231vw] z-10 -translate-y-1/2 -rotate-90 md:right-[4.42708vw]"
           >
             <Image
               src="/assets/icons/chevron-down.svg"
               alt=""
               width={26}
               height={14}
-              className="w-[1.354167vw]"
+              className="w-[6.41026vw] md:w-[1.354167vw]"
             />
           </button>
 
@@ -327,9 +336,9 @@ export default function WorkDetail({
             </div>
           )}
 
-          <div className="absolute bottom-[2.916667vw] left-1/2 flex -translate-x-1/2 items-center gap-[0.729167vw] text-[0.9375vw] font-bold">
+          <div className="absolute bottom-[7.46795vw] left-1/2 flex -translate-x-1/2 items-center gap-[1.86974vw] text-[2.4vw] font-bold md:bottom-[2.916667vw] md:gap-[0.729167vw] md:text-[0.9375vw]">
             <span>{pad(lightbox)}</span>
-            <div className="h-[0.9375vw] w-px bg-white/40" />
+            <div className="h-[2.4vw] w-px bg-white/40 md:h-[0.9375vw]" />
             <span className="opacity-50">{pad(total - 1)}</span>
           </div>
         </div>

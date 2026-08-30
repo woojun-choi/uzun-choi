@@ -14,22 +14,22 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 flex h-[8.85417vw] w-full items-center justify-center overflow-clip">
-        <div className="relative flex h-[4.6875vw] w-full items-center justify-between px-[4.42708vw] py-[1.40625vw]">
+      <header className="fixed inset-x-0 top-0 z-50 flex h-[28.20513vw] w-full items-center justify-center overflow-clip md:h-[8.85417vw]">
+        <div className="relative flex h-[23.07692vw] w-full items-center justify-between pr-[7.69231vw] pl-[8.97436vw] md:h-[4.6875vw] md:px-[4.42708vw] md:py-[1.40625vw]">
           <Link href="/" aria-label="UZUN home">
             <Image
               src="/assets/icons/logo.svg"
               alt="UZUN"
               width={68.75}
               height={55}
-              className="h-[2.86458vw] w-[3.58073vw]"
+              className="h-[9.31923vw] w-[11.53846vw] md:h-[2.86458vw] md:w-[3.58073vw]"
             />
           </Link>
-          {isWorkDetail ? (
+          {isWorkDetail && (
             <Link
               href="/works"
               aria-label="Back to works"
-              className="flex size-[2.5vw] items-center justify-center"
+              className="hidden size-[2.5vw] items-center justify-center md:flex"
             >
               <Image
                 src="/assets/icons/close-x.svg"
@@ -39,12 +39,16 @@ export default function Header() {
                 className="w-[1.82292vw] rotate-45"
               />
             </Link>
-          ) : (
-            <MenuToggle open={open} onToggle={() => setOpen((v) => !v)} />
           )}
+          {/* Mobile keeps the hamburger even on work-detail pages (Figma "M 4. Details"
+              doesn't swap to an X like desktop does) — the menu overlay's Works link
+              covers navigating back, so it's hidden at md instead of swapped out. */}
+          <div className={isWorkDetail ? "md:hidden" : undefined}>
+            <MenuToggle open={open} onToggle={() => setOpen((v) => !v)} />
+          </div>
         </div>
       </header>
-      {!isWorkDetail && <MenuOverlay open={open} onClose={() => setOpen(false)} />}
+      <MenuOverlay open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
