@@ -1,5 +1,23 @@
 # uzun-choi 인수인계 로그
 
+## 2026-08-30 13:53 — 메인 히어로 모바일/데스크톱 분리 큐레이션, 커밋·푸시 완료
+
+**지금 상태**: 직전 세션(13:31 항목)에서 모바일 반응형 빌드를 끝낸 뒤, 같은 세션에서 이어서 메인(`/`) 히어로 슬라이드를 모바일과 데스크톱이 서로 다른 작업 목록/순서를 갖도록 분리함. 커밋 `89eeda6`로 13개 파일 커밋·푸시 완료, `origin/main` 동기화됨.
+1. `lib/works.ts`의 `WorkMeta`에 `featuredMobile?: boolean`, `mobileOrder?: number` 필드 추가하고 `getFeaturedMobileWorks()`(featuredMobile로 필터, mobileOrder로 정렬) 신설. 기존 `featured`/`getFeaturedWorks()`(데스크톱용, order 필드로 정렬)는 그대로 유지.
+2. `components/HeroSection.tsx`: 기존 캐러셀 로직 전체를 내부 `Carousel({ items })` 컴포넌트로 추출하고, `HeroSection`은 `md:hidden`/`hidden md:block`으로 감싼 `Carousel` 두 개를 렌더링(모바일용 `mobileItems`, 데스크톱용 `items`를 각각 받음) — 두 캐러셀이 항상 동시에 DOM에 존재하고 CSS로만 전환되는 방식(ContactSection 등 기존 관례와 동일).
+3. `app/page.tsx`: `getFeaturedWorks()`(데스크톱, 기존 10개 유지)와 `getFeaturedMobileWorks()`(모바일 신규)를 각각 `buildSlides()`로 변환해 `HeroSection`에 전달.
+4. 모바일 히어로 최종 목록(10개, `mobileOrder` 순): UZUN BI(2026-16) → Jeju(2026-14) → Derrick Kakooza(2026-08) → Movie Land(2026-09) → 변정훈(2026-07) → Bombshelluth(2026-06) → E-OL(2026-05) → BAZAAR Cover(2025-04) → Mosaic(2024-05) → 불나방(2024-04). ("Magazine A - Movie Land"는 사용자가 한 번 추가했다가 바로 빼달라고 해서 최종 목록엔 없음 — `2026-13-magazine-a-movie-land/meta.json`은 원래 상태로 복귀.)
+5. 모바일 히어로 타이틀이 2줄로 줄바꿈될 때(예: "Derrick Kakooza") 우측 정렬이라 어색해 보이는 문제 — `items-end`/`text-right` → `items-start`/`text-left`로 전환(데스크톱은 원래도 좌측 정렬이라 영향 없음).
+6. **사이드 이슈(해결됨)**: 11개 `meta.json`에 필드를 추가할 때 python `json.dump(indent=2)`를 써서, 기존에 한 줄로 압축돼 있던 `credit` 배열(`{ "role": "...", "name": "..." }`)이 전부 여러 줄로 재포맷되는 부작용이 있었음 — 커밋 전에 발견해서 6개 파일(bulnabang/bazaar-cover/eol/byeonjeonghun/derick/magazine-a-movie-land) 전부 원래 압축 포맷으로 직접 되돌린 뒤 커밋함(최종 diff는 파일당 +4/-1로 깨끗함).
+
+**남은 일**: 없음. 사용자가 요청한 모바일 히어로 분리·순서·정렬 전부 반영·커밋·푸시 완료.
+
+**하면 안 되는 일**: 앞으로 `content/works/*/meta.json`을 스크립트로 일괄 수정할 때 `json.dump(indent=2)`를 그대로 쓰지 말 것 — 기존 파일들의 `credit` 배열은 사람이 손으로 압축 포맷(`{ "role": "X", "name": "Y" }` 한 줄)을 유지해왔는데, 표준 `json.dump`는 이걸 강제로 여러 줄로 펼쳐버려서 불필요한 diff 노이즈를 만듦. 필드 추가가 필요하면 텍스트 치환(Edit) 방식이나, 최소한 커밋 전에 `git diff`로 의도치 않은 재포맷이 없는지 반드시 확인할 것.
+
+**검증 방법**: `git log --oneline -3`에 `89eeda6`가 최신, `git status`가 clean인지 확인. `http://localhost:3000/`에서 모바일 폭(390×844)일 때 위 10개 순서대로 슬라이드가 넘어가는지, `md:` 이상 폭에서는 기존 데스크톱 10개(UZUN BI/Jeju/Movie Land/Bombshelluth/E-OL/JBL GO 4/iPhone obscura/Waffle/홍연/Mosaic)가 그대로 나오는지 확인. "Derrick Kakooza"처럼 2줄 넘어가는 타이틀이 왼쪽 정렬로 나오는지도 확인.
+
+**참고**: `lib/works.ts`(`getFeaturedMobileWorks`), `app/page.tsx`, `components/HeroSection.tsx`(`Carousel` 분리), 커밋 `89eeda6`. 데스크톱 featured 10개와 모바일 featured 10개는 서로 겹치는 작업도 있고(UZUN BI/Jeju/Movie Land/Bombshelluth/E-OL/Mosaic) 안 겹치는 작업도 있음(모바일만: Derrick Kakooza/변정훈/BAZAAR Cover/불나방, 데스크톱만: JBL GO 4/iPhone obscura/Waffle/홍연) — 둘 다 독립적인 필드(`featured` vs `featuredMobile`)라 한쪽만 바꿔도 다른 쪽엔 영향 없음.
+
 ## 2026-08-30 13:31 — 전체 페이지 모바일(390px) 반응형 빌드 완료, 커밋·푸시 완료
 
 **지금 상태**: 데스크톱(1920 기준) 전용이던 사이트에 모바일 breakpoint를 전 페이지에 걸쳐 추가함. 커밋 `898b3d8`로 12개 파일(컴포넌트 11개 + `lib/useSwipe.ts` 신규) 한 번에 커밋·푸시 완료, `origin/main`과 동기화됨. 패턴: unprefixed 클래스 = 모바일(390 baseline), `md:` = 데스크톱(1920 baseline, 기존 값 그대로).
