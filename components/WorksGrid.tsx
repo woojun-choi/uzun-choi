@@ -95,6 +95,7 @@ export default function WorksGrid({
                 src={work.coverUrl}
                 alt={work.title.ko}
                 fill
+                sizes="(min-width: 768px) 20vw, 50vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-black/45 opacity-0 transition-opacity duration-300 md:group-hover:opacity-100">

@@ -18,7 +18,7 @@ export type HeroSlide = {
 function Slide({ item, index, priority }: { item: HeroSlide; index: number; priority: boolean }) {
   return (
     <section
-      className="relative flex h-screen w-full items-center justify-center overflow-hidden"
+      className="relative flex h-[100dvh] w-full items-center justify-center overflow-hidden"
       style={!item.cover ? { background: index % 2 === 0 ? "#141414" : "#1a1a1a" } : undefined}
     >
       {item.cover && (
@@ -114,7 +114,7 @@ function Carousel({ items }: { items: HeroSlide[] }) {
           transitionEnabled ? "ease-[cubic-bezier(0.65,0,0.35,1)] transition-transform" : ""
         }
         style={{
-          transform: `translateY(-${visualIndex * 100}vh)`,
+          transform: `translateY(-${visualIndex * 100}dvh)`,
           transitionDuration: transitionEnabled ? `${TRANSITION_MS}ms` : "0ms",
         }}
       >
