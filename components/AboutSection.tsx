@@ -103,18 +103,18 @@ export default function AboutSection() {
         {/* Name + intro */}
         <Section>
           <div className="flex flex-col gap-[7.17949vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0">
-            <div className="flex flex-row gap-[2.5641vw] text-[4.10256vw] leading-none font-bold md:w-[11.40625vw] md:flex-col md:gap-0 md:pl-[0.520833vw] md:text-[1.25vw] md:leading-[2.1875vw]">
+            <div className="flex flex-row gap-[2.5641vw] text-[4.61538vw] leading-none font-bold md:w-[11.40625vw] md:flex-col md:gap-0 md:pl-[0.520833vw] md:text-[1.25vw] md:leading-[2.1875vw]">
               <p>UZUN CHOI</p>
               <p>최우준</p>
             </div>
             <div className="flex flex-col gap-[3.07692vw] font-medium opacity-80 md:w-[48.48958vw] md:gap-[1.041667vw] md:text-[1.145833vw] md:font-bold md:opacity-100">
-              <p className="text-[3.58974vw] leading-[5.12821vw] md:text-[1.145833vw] md:leading-[2.1875vw]">
+              <p className="text-[4.10256vw] leading-[5.89744vw] md:text-[1.145833vw] md:leading-[2.1875vw]">
                 UZUN is a creator working across photography, film, design, and
                 development. Based in Korea - Seoul, Anseong, and Daejeon, UZUN
                 focuses on essence over medium. Rather than a fixed style, UZUN
                 seeks the right expression for each project.
               </p>
-              <p className="text-[3.33333vw] leading-[5.38462vw] md:text-[1.145833vw] md:leading-[2.1875vw]">
+              <p className="text-[3.84615vw] leading-[6.15385vw] md:text-[1.145833vw] md:leading-[2.1875vw]">
                 UZUN은 촬영, 영상, 디자인, 개발을 넘나드는 크리에이터입니다.
                 서울, 안성, 대전을 기반으로 활동하며, 매체보다 본질에
                 집중합니다. 정해진 스타일보다 매 프로젝트에 맞는 표현을
@@ -127,7 +127,7 @@ export default function AboutSection() {
         {/* CV */}
         <Section>
           <div className="flex flex-col gap-[7.17949vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0">
-            <p className="text-[4.10256vw] font-bold whitespace-nowrap md:pl-[0.520833vw] md:text-[1.25vw]">CV</p>
+            <p className="text-[4.61538vw] font-bold whitespace-nowrap md:pl-[0.520833vw] md:text-[1.25vw]">CV</p>
             <div className="flex flex-col gap-[4.10256vw] opacity-80 md:w-[48.64583vw] md:gap-[0.989583vw] md:opacity-100">
               {CV_ENTRIES.map((entry) => (
                 <div
@@ -141,16 +141,16 @@ export default function AboutSection() {
                   }
                 >
                   <p
-                    className="shrink-0 text-[3.58974vw] leading-none whitespace-nowrap md:w-[var(--desktop-width)] md:text-[1.25vw] md:leading-[2.86458vw]"
+                    className="shrink-0 text-[4.10256vw] leading-none whitespace-nowrap md:w-[var(--desktop-width)] md:text-[1.25vw] md:leading-[2.86458vw]"
                     style={{ "--desktop-width": `${entry.yearWidthVw}vw` } as CSSProperties}
                   >
                     {entry.year}
                   </p>
                   <div className="-mt-[0.76923vw] flex flex-1 flex-col gap-[2.05128vw] md:mt-0 md:gap-0">
-                    <p className="text-[3.58974vw] leading-[4.61538vw] font-medium md:-mb-[0.78125vw] md:text-[1.145833vw] md:leading-[2.86458vw] md:font-bold">
+                    <p className="text-[4.10256vw] leading-[5.64103vw] font-medium md:-mb-[0.78125vw] md:text-[1.145833vw] md:leading-[2.86458vw] md:font-bold">
                       {entry.title}
                     </p>
-                    <p className="text-[3.33333vw] leading-none opacity-80 md:text-[1.145833vw] md:leading-[2.86458vw]">
+                    <p className="text-[3.84615vw] leading-none opacity-80 md:text-[1.145833vw] md:leading-[2.86458vw]">
                       {entry.subtitle}
                     </p>
                   </div>
@@ -174,8 +174,8 @@ export default function AboutSection() {
                   } as CSSProperties
                 }
               >
-                <p className="text-[4.10256vw] font-bold md:whitespace-nowrap md:text-[1.145833vw]">{cat.label}</p>
-                <div className="flex flex-col gap-[0.25641vw] text-[3.58974vw] opacity-80 md:gap-[0.260417vw] md:text-[1.145833vw]">
+                <p className="text-[4.61538vw] font-bold md:whitespace-nowrap md:text-[1.145833vw]">{cat.label}</p>
+                <div className="flex flex-col gap-[0.25641vw] text-[4.10256vw] opacity-80 md:gap-[0.260417vw] md:text-[1.145833vw]">
                   {cat.items.map((item) => (
                     <p key={item} className="md:whitespace-nowrap">
                       {item}
@@ -190,17 +190,17 @@ export default function AboutSection() {
         {/* Contact */}
         <Section>
           <div className="flex flex-col gap-[7.17949vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0">
-            <p className="text-[4.10256vw] font-bold whitespace-nowrap md:pl-[0.520833vw] md:text-[1.25vw]">CONTACT</p>
+            <p className="text-[4.61538vw] font-bold whitespace-nowrap md:pl-[0.520833vw] md:text-[1.25vw]">CONTACT</p>
             <div className="flex flex-col gap-[2.05128vw] opacity-80 md:w-[48.64583vw] md:gap-[1.5625vw] md:opacity-100">
-              <div className="flex flex-col gap-[0.51282vw] text-[3.33333vw] font-medium md:gap-[0.3125vw] md:text-[1.145833vw] md:font-bold">
+              <div className="flex flex-col gap-[0.51282vw] text-[3.84615vw] font-medium md:gap-[0.3125vw] md:text-[1.145833vw] md:font-bold">
                 <p>새로운 프로젝트를 함께한 준비가 되어있습니다.</p>
                 <p>Ready for the next project.</p>
               </div>
               <div className="h-px w-[2.604167vw] bg-white/40" />
-              <div className="flex items-center gap-[0.78125vw]">
+              <div className="flex items-center gap-[2.05128vw] md:gap-[0.78125vw]">
                 <CopyEmailLink
                   email="uzunchoi@gmail.com"
-                  className="text-[3.33333vw] font-normal text-white/90 transition-colors hover:text-white md:text-[1.25vw] md:font-bold"
+                  className="text-[3.84615vw] font-normal text-white/90 transition-colors hover:text-white md:text-[1.25vw] md:font-bold"
                   toastOffsetVw={1.5625}
                 />
                 <a
@@ -208,14 +208,14 @@ export default function AboutSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="flex size-[3.07692vw] items-center justify-center opacity-80 transition-opacity hover:opacity-100 md:size-[1.822917vw]"
+                  className="flex size-[3.33333vw] items-center justify-center opacity-80 transition-opacity hover:opacity-100 md:size-[1.822917vw]"
                 >
                   <Image
                     src="/assets/icons/ig.svg"
                     alt=""
                     width={22}
                     height={22}
-                    className="size-[3.07692vw] md:size-[1.139323vw]"
+                    className="size-[3.33333vw] md:size-[1.139323vw]"
                   />
                 </a>
               </div>

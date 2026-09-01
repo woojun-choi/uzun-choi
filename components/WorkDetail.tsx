@@ -229,19 +229,19 @@ export default function WorkDetail({
         <div className="flex flex-col gap-[5.12821vw] md:gap-[2.604167vw]">
           <Divider />
           <div className="flex flex-col gap-[7.17949vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0">
-            <p className="shrink-0 text-[4.10256vw] font-bold md:w-[11.40625vw] md:pl-[0.520833vw] md:text-[1.25vw]">
+            <p className="shrink-0 text-[4.61538vw] font-bold md:w-[11.40625vw] md:pl-[0.520833vw] md:text-[1.25vw]">
               Description
             </p>
             <div className="flex flex-col gap-[3.07692vw] font-medium text-white/80 md:w-[48.489583vw] md:gap-[1.2vw] md:font-[550]">
               {description.en && (
-                <div className="flex flex-col gap-[0.4vw] text-[3.58974vw] leading-[5.12821vw] md:text-[1.145833vw] md:leading-[1.85vw]">
+                <div className="flex flex-col gap-[0.4vw] text-[4.10256vw] leading-[5.89744vw] md:text-[1.145833vw] md:leading-[1.85vw]">
                   {description.en
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`en-${i}`}>{p}</p>)}
                 </div>
               )}
               {description.ko && (
-                <div className="flex flex-col gap-[0.4vw] text-[3.33333vw] leading-[5.38462vw] md:text-[1.145833vw] md:leading-[1.95vw]">
+                <div className="flex flex-col gap-[0.4vw] text-[3.84615vw] leading-[6.15385vw] md:text-[1.145833vw] md:leading-[1.95vw]">
                   {description.ko
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`ko-${i}`}>{p}</p>)}
@@ -256,14 +256,14 @@ export default function WorkDetail({
           <div className="flex flex-col gap-[5.12821vw] md:gap-[2.604167vw]">
             <Divider />
             <div className="flex flex-col gap-[7.17949vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0 md:pl-[0.520833vw]">
-              <p className="text-[4.10256vw] font-bold whitespace-nowrap md:text-[1.25vw]">
+              <p className="text-[4.61538vw] font-bold whitespace-nowrap md:text-[1.25vw]">
                 Credit
               </p>
               <div className="flex flex-col gap-[2.05128vw] md:w-[48.645833vw] md:gap-[0.520833vw]">
                 {work.credit.map((c, i) => (
                   <div
                     key={`${c.role}-${i}`}
-                    className="flex items-center justify-between text-[3.33333vw] font-medium text-white/80 md:text-[1.25vw] md:leading-[2.864583vw] md:font-[550]"
+                    className="flex items-center justify-between text-[3.84615vw] font-medium text-white/80 md:text-[1.25vw] md:leading-[2.864583vw] md:font-[550]"
                   >
                     <p>{c.role}</p>
                     <p className="pr-[0.78125vw]">{c.name}</p>
