@@ -6,6 +6,16 @@ import Link from "next/link";
 import type { WorkCategory, WorkMeta } from "@/lib/works";
 import { useSwipe } from "@/lib/useSwipe";
 
+const FULL_SIZE_THUMBNAIL_SLUGS = new Set([
+  "2026-15-10-pure-freestyle",
+  "2026-09-movie-land",
+  "2026-01-noknok",
+  "2025-01-dakdari",
+  "2025-03-waffle",
+  "2026-16-uzun-bi",
+  "2026-14-jeju",
+]);
+
 const TAGS: { label: string; value: WorkCategory | "ALL" }[] = [
   { label: "ALL", value: "ALL" },
   { label: "PHOTO", value: "photo" },
@@ -95,7 +105,11 @@ export default function WorksGrid({
                 src={work.coverUrl}
                 alt={work.title.ko}
                 fill
-                sizes="(min-width: 768px) 20vw, 50vw"
+                sizes={
+                  FULL_SIZE_THUMBNAIL_SLUGS.has(work.slug)
+                    ? undefined
+                    : "(min-width: 768px) 20vw, 50vw"
+                }
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-black/45 opacity-0 transition-opacity duration-300 md:group-hover:opacity-100">

@@ -17,5 +17,32 @@
     { "role": "Edited by", "name": "Siz" },
     { "role": "Recorded, Mixed & Mastered by", "name": "Siz" }
   ],
-  "videoUrl": "https://youtu.be/YYOSLc0MZYQ"
+  "videoUrl": "https://youtu.be/YYOSLc0MZYQ",
+  "stackedRandomPool": [
+    "media/01_still_01_00m25.17s.png",
+    "media/02_still_02_00m33.08s.png",
+    "media/03_still_03_01m02.83s.png",
+    "media/04_still_04_01m34.21s.png",
+    "media/05_still_05_01m51.88s.png",
+    "media/06_still_06_02m24.33s.png",
+    "media/07_still_07_02m31.79s.png",
+    "media/08_still_08_02m58.38s.png",
+    "media/09_still_09_03m38.38s.png",
+    "media/10_still_10_04m01.75s.png",
+    "media/11_still_11_04m15.46s.png",
+    "media/12_still_12_04m38.88s.png",
+    "media/13_still_13_05m18.12s.png",
+    "media/14_still_14_05m52.79s.png",
+    "media/15_still_15_06m08.00s.png",
+    "media/16_still_16_06m25.21s.png",
+    "media/17_still_17_06m45.42s.png",
+    "media/18_still_18_07m26.25s.png",
+    "media/19_still_19_07m52.75s.png",
+    "media/20_still_20_08m17.67s.png",
+    "media/21_still_21_08m38.29s.png",
+    "media/22_still_22_09m13.04s.png",
+    "media/23_still_23_09m36.21s.png",
+    "media/24_still_24_09m45.42s.png"
+  ],
+  "stackedRandomCount": 7
 }

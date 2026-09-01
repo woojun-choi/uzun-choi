@@ -8,7 +8,7 @@ import type { WorkMeta } from "@/lib/works";
 import { useSwipe } from "@/lib/useSwipe";
 
 function Divider() {
-  return <div className="h-px w-full bg-white/15" />;
+  return <div className="h-[2px] w-full bg-white/60 md:h-px" />;
 }
 
 const STACKED_LIMIT = 7;
@@ -45,6 +45,23 @@ function pickStacked(media: string[], seedKey: string, limit = STACKED_LIMIT) {
     .map((i) => media[i]);
 }
 
+function shuffle<T>(arr: T[]) {
+  const result = [...arr];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+// Randomly pick `count` items but keep their original relative order.
+function pickRandomInOrder<T>(arr: T[], count: number) {
+  const indices = shuffle(arr.map((_, i) => i))
+    .slice(0, count)
+    .sort((a, b) => a - b);
+  return indices.map((i) => arr[i]);
+}
+
 function toYoutubeEmbedUrl(url: string) {
   try {
     const u = new URL(url);
@@ -71,6 +88,20 @@ export default function WorkDetail({
   const [heroPortrait, setHeroPortrait] = useState(work.heroPortrait ?? false);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [titleWraps, setTitleWraps] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+    const checkWrap = () => {
+      const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
+      setTitleWraps(el.scrollHeight > lineHeight * 1.5);
+    };
+    checkWrap();
+    window.addEventListener("resize", checkWrap);
+    return () => window.removeEventListener("resize", checkWrap);
+  }, [work.slug]);
 
   const resolveMedia = (files: string[]) =>
     files.map((f) => `/works-media/${work.slug}/${f}`);
@@ -79,13 +110,26 @@ export default function WorkDetail({
   const heroTotal = heroMedia.length;
   const heroArrowsDisabled = heroTotal <= 1;
 
+  const stackedPinned = work.stackedPinned?.length ? resolveMedia(work.stackedPinned) : [];
+  const stackedPool = work.stackedRandomPool?.length ? resolveMedia(work.stackedRandomPool) : [];
+  const stackedRandomCount = work.stackedRandomCount ?? stackedPool.length;
+
+  const [stackedPicks, setStackedPicks] = useState(() => stackedPool.slice(0, stackedRandomCount));
+  useEffect(() => {
+    if (!stackedPool.length) return;
+    setStackedPicks(pickRandomInOrder(stackedPool, stackedRandomCount));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [work.slug]);
+
   const total = media.length;
   const pad = (zeroBased: number) => String(zeroBased + 1).padStart(2, "0");
   const showStacked = total > 8;
   const stackedMedia = showStacked
-    ? work.stackedMedia?.length
-      ? resolveMedia(work.stackedMedia)
-      : pickStacked(media, work.slug)
+    ? stackedPinned.length || stackedPool.length
+      ? [...stackedPinned, ...stackedPicks]
+      : work.stackedMedia?.length
+        ? resolveMedia(work.stackedMedia)
+        : pickStacked(media, work.slug)
     : [];
 
   const heroPrev = () => setHeroIndex((i) => (i - 1 + heroTotal) % heroTotal);
@@ -149,8 +193,11 @@ export default function WorkDetail({
           />
         )}
 
-        <div className="absolute top-[141.0256vw] left-[3.33333vw] flex max-w-[65vw] flex-col items-end gap-[0.84vw] md:max-w-none md:flex-row md:items-start md:top-auto md:bottom-[4.010417vw] md:left-0 md:gap-[0.416667vw]">
+        <div
+          className={`absolute top-[141.0256vw] left-[3.33333vw] flex max-w-[65vw] flex-col items-end gap-[0.84vw] md:max-w-none md:flex-row md:items-start md:top-auto md:bottom-[4.010417vw] md:left-0 md:gap-[0.416667vw] ${titleWraps ? "translate-y-[5px] md:translate-y-0" : ""}`}
+        >
           <h1
+            ref={titleRef}
             className="order-2 text-right text-[10.25641vw] leading-[11.79487vw] font-bold md:order-1 md:text-left md:text-[5.208333vw] md:leading-none"
             style={{ textShadow: "1px 1px 0 rgba(0,0,0,0.1)" }}
           >
@@ -177,24 +224,24 @@ export default function WorkDetail({
       </div>
 
       {/* Body */}
-      <div className="mx-auto flex w-[93.90625vw] flex-col gap-[6.25vw] pt-[42.0513vw] pb-[3.125vw] md:pt-[10.41667vw]">
+      <div className="mx-auto flex w-[93.90625vw] flex-col gap-[13.94231vw] pt-[42.0513vw] pb-[3.125vw] md:gap-[6.25vw] md:pt-[10.41667vw]">
         {/* Description */}
-        <div className="flex flex-col gap-[3.125vw]">
+        <div className="flex flex-col gap-[5.12821vw] md:gap-[2.604167vw]">
           <Divider />
-          <div className="flex flex-col gap-[5.12821vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0">
-            <p className="shrink-0 text-[3.33333vw] font-bold md:w-[11.40625vw] md:pl-[0.520833vw] md:text-[1.25vw] md:leading-[2.1875vw]">
+          <div className="flex flex-col gap-[7.17949vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0">
+            <p className="shrink-0 text-[4.10256vw] font-bold md:w-[11.40625vw] md:pl-[0.520833vw] md:text-[1.25vw]">
               Description
             </p>
-            <div className="flex flex-col gap-[1.53846vw] text-[2.5641vw] font-medium text-white/80 md:w-[48.489583vw] md:gap-[1.2vw] md:text-[1.145833vw] md:font-[550]">
+            <div className="flex flex-col gap-[3.07692vw] font-medium text-white/80 md:w-[48.489583vw] md:gap-[1.2vw] md:font-[550]">
               {description.en && (
-                <div className="flex flex-col gap-[0.4vw] leading-[3.84615vw] md:leading-[1.85vw]">
+                <div className="flex flex-col gap-[0.4vw] text-[3.58974vw] leading-[5.12821vw] md:text-[1.145833vw] md:leading-[1.85vw]">
                   {description.en
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`en-${i}`}>{p}</p>)}
                 </div>
               )}
               {description.ko && (
-                <div className="flex flex-col gap-[0.4vw] leading-[4.10256vw] md:leading-[1.95vw]">
+                <div className="flex flex-col gap-[0.4vw] text-[3.33333vw] leading-[5.38462vw] md:text-[1.145833vw] md:leading-[1.95vw]">
                   {description.ko
                     .split(/\n{2,}/)
                     .map((p, i) => <p key={`ko-${i}`}>{p}</p>)}
@@ -206,17 +253,17 @@ export default function WorkDetail({
 
         {/* Credit */}
         {work.credit && work.credit.length > 0 && (
-          <div className="flex flex-col gap-[3.125vw]">
+          <div className="flex flex-col gap-[5.12821vw] md:gap-[2.604167vw]">
             <Divider />
-            <div className="flex flex-col gap-[5.12821vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0 md:pl-[0.520833vw]">
-              <p className="text-[3.33333vw] font-bold whitespace-nowrap md:text-[1.25vw]">
+            <div className="flex flex-col gap-[7.17949vw] px-[1.02564vw] md:flex-row md:items-start md:justify-between md:gap-0 md:px-0 md:pl-[0.520833vw]">
+              <p className="text-[4.10256vw] font-bold whitespace-nowrap md:text-[1.25vw]">
                 Credit
               </p>
               <div className="flex flex-col gap-[2.05128vw] md:w-[48.645833vw] md:gap-[0.520833vw]">
                 {work.credit.map((c, i) => (
                   <div
                     key={`${c.role}-${i}`}
-                    className="flex items-center justify-between text-[2.5641vw] font-medium text-white/80 md:text-[1.25vw] md:leading-[2.864583vw] md:font-[550]"
+                    className="flex items-center justify-between text-[3.33333vw] font-medium text-white/80 md:text-[1.25vw] md:leading-[2.864583vw] md:font-[550]"
                   >
                     <p>{c.role}</p>
                     <p className="pr-[0.78125vw]">{c.name}</p>
@@ -264,7 +311,7 @@ export default function WorkDetail({
         {/* Copyright */}
         <div className="flex flex-col items-center gap-[13.75vw]">
           <Divider />
-          <p className="text-center text-[2.30769vw] text-white md:text-[1.041667vw]">
+          <p className="text-center text-[2.5641vw] text-white md:text-[1.041667vw]">
             © 2026 UZUN. All rights reserved.
           </p>
         </div>

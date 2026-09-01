@@ -16,5 +16,24 @@
     { "role": "Filmed by", "name": "UZUN" },
     { "role": "VFX by", "name": "UZUN" },
     { "role": "Special Thanks to", "name": "Team 0000, Kihoon, Siz" }
-  ]
+  ],
+  "stackedRandomPool": [
+    "media/01_1.jpg",
+    "media/02_10.jpg",
+    "media/03_11.jpg",
+    "media/04_12.jpg",
+    "media/05_13.jpg",
+    "media/06_14.jpg",
+    "media/07_15.jpg",
+    "media/08_16.jpg",
+    "media/09_2.jpg",
+    "media/10_3.jpg",
+    "media/11_4.jpg",
+    "media/12_5.jpg",
+    "media/13_6.jpg",
+    "media/14_7.jpg",
+    "media/15_8.jpg",
+    "media/16_9.jpg"
+  ],
+  "stackedRandomCount": 7
 }

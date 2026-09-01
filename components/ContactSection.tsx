@@ -132,7 +132,7 @@ export default function ContactSection() {
   };
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center bg-[#0c0c0c] text-white md:h-screen md:justify-center md:overflow-hidden">
+    <main className="relative flex h-[100dvh] flex-col items-center overflow-hidden bg-[#0c0c0c] text-white md:h-screen md:justify-center">
       {/* Mobile: static layout, no cursor-follow (Figma "M 5. Contact" has no hover
           interaction — there's no cursor on touch, so the info text is always shown).
           Each block is pinned to its exact Figma top offset (measured from the

@@ -22,6 +22,9 @@ export type WorkMeta = {
   mobileOrder?: number;
   heroMedia?: string[];
   stackedMedia?: string[];
+  stackedPinned?: string[];
+  stackedRandomPool?: string[];
+  stackedRandomCount?: number;
   heroPortrait?: boolean;
 };
 

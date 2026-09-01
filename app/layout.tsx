@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.uzun-choi.com"),
   title: "UZUN CHOI",
-  description: "UZUN — photography, film, design, development.",
+  description: "UZUN CHOI - Ready to be creative.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
