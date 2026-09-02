@@ -1,5 +1,22 @@
 # uzun-choi 인수인계 로그
 
+## 2026-09-02 10:00 — About/상세 모바일 타이포·간격 대규모 조정, 메뉴 정렬 버그 수정(미커밋)
+
+**지금 상태**: 이전 세션(2026-08-31, 커밋 `8314a77`~`912bd7d`)에서 시작한 모바일 전용 폴리시 작업을 이어서 진행. 이번 세션에서 한 일:
+1. Works 그리드 썸네일 리사이징(`sizes` prop) 제외 목록에 `2026-14-jeju` 추가(커밋 `f49ac04`에 포함된 기존 5개+오늘 1개).
+2. Magazine A - UZUN(`2026-11-magazine-a-uzun`)의 상세페이지 "스택" 이미지: `69`번 이미지를 최상단 고정, `12`~`67`번(56장) 중 9장을 매 새로고침마다 진짜 랜덤(Math.random, seed 없음)으로 뽑되 번호 오름차순으로 정렬해서 노출. `2026-12-0000`/`2026-15-10-pure-freestyle`도 같은 방식(고정 없이 전체 미디어 풀에서 7장 랜덤)으로 확장. `lib/works.ts`에 `stackedPinned`/`stackedRandomPool`/`stackedRandomCount` 필드 추가, `WorkDetail.tsx`에 `pickRandomInOrder()` 구현(SSR 하이드레이션 안전하게 초기값은 결정적, `useEffect`에서 진짜 랜덤 재계산). (이상 커밋 `f49ac04`)
+3. 상세페이지 타이틀이 2줄로 줄바꿈되는지 `useRef`+`scrollHeight` 비교로 자동 감지해서, 2줄일 때만 모바일에서 5px 아래로 `translate-y` — 실제 줄바꿈 여부 기반이라 새 작업 추가돼도 자동 대응됨. (커밋 `f49ac04`)
+4. About/상세 폰트 크기·행간·구분선 위아래 여백을 여러 차례 미세조정 끝에 최종 확정, 그 다음 About "이름~이메일 링크"·상세 "Description 라벨~Credit 본문"을 각각 +2px, 다시 +1px 추가 인상(비율 유지하며 관련 leading도 재계산). 소개/Description 본문 영문·한글 행간, CV 항목 제목 행간, 이메일-인스타 아이콘 간격(+5px), 인스타 아이콘 크기(+1px)도 조정. (커밋 `912bd7d`, 그리고 **아직 미커밋 상태로 +1px 라운드 존재** — 아래 참고)
+5. `MenuOverlay.tsx`: 데스크톱 메뉴 오버레이 하단 태그 목록("Photography | Film | Design | Dev")이 다른 줄(About/Works/Contact, "ALWAYS, REFINE, STILL", 카피라이트)과 우측 정렬이 안 맞던 버그 발견·수정 — 태그 컨테이너에 붙어있던 불필요한 `px-[0.84203vw] md:px-[0.20833vw]` 패딩 제거. **미커밋**.
+
+**남은 일**: `git status`에 잡히는 `components/AboutSection.tsx`, `components/WorkDetail.tsx`(4번 항목 마지막 +1px 라운드), `components/MenuOverlay.tsx`(5번 메뉴 정렬 수정) 전부 미커밋 상태. 사용자에게 커밋·푸시 확인만 받으면 됨(직전에 물어봤고 아직 답 대기 중이었음).
+
+**하면 안 되는 일**: (이 프로젝트 공용 규칙, 메모리에도 저장됨) 모바일 전용 값을 건드릴 때 그 클래스에 `md:` 오버라이드가 없으면 반드시 먼저 현재 데스크톱 계산값으로 `md:` 값을 고정해서 추가한 뒤에 모바일(unprefixed) 값을 바꿀 것 — 안 그러면 `vw` 단위 특성상 데스크톱까지 같이 변함(이번 세션엔 이 규칙을 계속 지켜서 문제 없었음). 폰트 크기를 부모→자식으로 옮길 때 자식에 `md:text-[...]`를 안 붙이면 데스크톱에서 글자가 뷰포트 기준으로 커져서 겹치는 심각한 버그 발생(직전 세션에 실제로 겪고 고침, `WorkDetail.tsx` Description 섹션). Chrome 자동화의 `resize_window`는 이미 넓어진 창을 다시 좁히는 게 잘 안 먹힘 — 탭을 닫고 `tabs_context_mcp`로 새로 연 뒤 resize해야 안정적으로 먹힘.
+
+**검증 방법**: `git diff --stat`로 위 3개 파일 확인 후 커밋. 데스크톱 메뉴 정렬은 `http://localhost:3000/` 접속 → 우측 상단 햄버거 클릭 → 하단 "Photography | Film | Design | Dev"의 "Dev" 우측 끝이 "ALWAYS, REFINE, STILL"·카피라이트 우측 끝과 정확히 일치하는지 확인(1154px 폭에서 DOM 좌표로 실측 완료: 전부 1102.914px로 일치). About(`/about`)·상세(`/works/<slug>`) 폰트/행간은 모바일(390px 폭)에서 가로 스크롤 없는지, 카테고리 2x2 그리드 안 깨지는지 확인.
+
+**참고**: 커밋 `f49ac04`(스택 랜덤·2줄 타이틀·리사이징), `912bd7d`(+2px 폰트 라운드) — 오늘 세션은 그 위에 이어서 작업. `lib/works.ts`의 `stackedPinned`/`stackedRandomPool`/`stackedRandomCount`, `WorkDetail.tsx`의 `pickRandomInOrder`/`titleWraps` 로직, `MenuOverlay.tsx`의 `WORK_TAGS` 렌더 부분. 프로젝트 메모리 파일 `feedback_mobile_only_edits.md`에 모바일 전용 편집 규칙 정리돼 있음.
+
 ## 2026-08-30 13:53 — 메인 히어로 모바일/데스크톱 분리 큐레이션, 커밋·푸시 완료
 
 **지금 상태**: 직전 세션(13:31 항목)에서 모바일 반응형 빌드를 끝낸 뒤, 같은 세션에서 이어서 메인(`/`) 히어로 슬라이드를 모바일과 데스크톱이 서로 다른 작업 목록/순서를 갖도록 분리함. 커밋 `89eeda6`로 13개 파일 커밋·푸시 완료, `origin/main` 동기화됨.

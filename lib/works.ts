@@ -64,6 +64,21 @@ export function workCoverUrl(work: WorkMeta) {
   return `/works-media/${work.slug}/${work.cover}`;
 }
 
+function toThumbRelPath(coverRel: string): string {
+  const idx = coverRel.lastIndexOf("/");
+  const dir = idx === -1 ? "" : coverRel.slice(0, idx + 1);
+  const base = idx === -1 ? coverRel : coverRel.slice(idx + 1);
+  return `${dir}thumb/${base}`;
+}
+
+export function workCoverThumbUrl(work: WorkMeta) {
+  const thumbRel = toThumbRelPath(work.cover);
+  const thumbPath = path.join(WORKS_DIR, work.slug, thumbRel);
+  return fs.existsSync(thumbPath)
+    ? `/works-media/${work.slug}/${thumbRel}`
+    : workCoverUrl(work);
+}
+
 export function workHeroCoverUrl(work: WorkMeta) {
   return `/works-media/${work.slug}/${work.heroCover ?? work.cover}`;
 }
