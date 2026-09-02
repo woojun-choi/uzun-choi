@@ -25,7 +25,7 @@ export default function MenuOverlay({
       }`}
       aria-hidden={!open}
     >
-      <div className="flex h-full max-h-screen flex-col gap-[7.87846vw] overflow-y-auto pt-[21.53846vw] md:gap-0 md:pt-[6.770833vw]">
+      <div className="flex h-full max-h-screen flex-col gap-[7.87846vw] overflow-y-auto pt-[22.82051vw] md:gap-0 md:pt-[6.770833vw]">
         <nav className="flex flex-col items-end gap-[3.07692vw] px-[8.97436vw] md:flex-1 md:gap-[0.78125vw] md:px-[4.42708vw] md:pt-0 md:pb-[2.08333vw]">
           {NAV_ITEMS.map((item, i) => (
             <Link

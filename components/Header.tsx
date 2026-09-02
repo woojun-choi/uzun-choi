@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 flex h-[20.51282vw] w-full items-center justify-center overflow-clip md:h-[8.85417vw]">
+      <header className="fixed inset-x-0 top-[1.28205vw] z-50 flex h-[20.51282vw] w-full items-center justify-center overflow-clip md:top-0 md:h-[8.85417vw]">
         <div className="relative flex h-[20.51282vw] w-full items-center justify-between px-[6.41026vw] md:h-[4.6875vw] md:px-[4.42708vw] md:py-[1.40625vw]">
           <Link href="/" aria-label="UZUN home">
             <Image

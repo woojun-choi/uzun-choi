@@ -46,7 +46,7 @@ export default function WorksGrid({
     active === "ALL" ? works : works.filter((w) => w.category.includes(active));
 
   return (
-    <main className="relative flex min-h-screen flex-col bg-[#0c0c0c] pt-[20.51282vw] text-white md:pt-[8.85417vw]">
+    <main className="relative flex min-h-screen flex-col bg-[#0c0c0c] pt-[21.79487vw] text-white md:pt-[8.85417vw]">
       {/* Mobile: full-viewport-width tag pager, swipe to bring the next tag into
           view and tap to select (Figma "M 3. Works" — each label is its own
           screen-width slide, not a compact chip). Positioned absolutely at its
@@ -57,7 +57,7 @@ export default function WorksGrid({
           grid's left edge. */}
       <div
         ref={tagRailRef}
-        className="absolute inset-x-0 top-[21.79487vw] h-[16.6667vw] touch-pan-y overflow-hidden text-[10.7692vw] font-black opacity-90 md:hidden"
+        className="absolute inset-x-0 top-[23.07692vw] h-[16.6667vw] touch-pan-y overflow-hidden text-[10.7692vw] font-black opacity-90 md:hidden"
       >
         <div
           className="flex ease-[cubic-bezier(0.65,0,0.35,1)] transition-transform duration-300"
