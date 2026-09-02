@@ -1,5 +1,21 @@
 # uzun-choi 인수인계 로그
 
+## 2026-09-02 11:48 — 데스크톱 메뉴 Safari 정렬 수정, Works 그리드 썸네일 최적화, 커밋·푸시 완료
+
+**지금 상태**: 두 커밋으로 나눠 커밋·푸시 완료(`1871b39`, `1a819ae`), `git status` clean, `origin/main` 동기화됨.
+1. `MenuOverlay.tsx`: 데스크톱 메뉴 하단 태그 줄("Photography | Film | Design | Dev")이 Safari에서 가운데 정렬처럼 보이는 문제 — 기존엔 부모의 `items-end`(고정폭 컨테이너 안에서 콘텐츠가 폭에 거의 딱 맞거나 살짝 넘치는 상태)에만 의존했는데, 엔진마다 오버플로우 처리가 갈릴 수 있어서 각 줄 자체에 `w-full justify-end`를 추가해 `justify-content`로 직접 우측 고정하도록 바꿈. Chrome에서는 재확인 완료, **Safari 재확인은 사용자 몫**(요청받았으나 이 세션에서 직접 Safari로 검증은 못 함 — Claude in Chrome은 Chrome만 자동화 가능).
+2. 모바일 하단 태그 블록 전체를 15% 축소해달라는 요청 → 적용 직후 사용자가 "축소하기 전으로 되돌려줘"라고 해서 즉시 원복함. **결과적으로 이 부분은 순변경 없음**(커밋에도 안 들어감).
+3. Works 그리드(`/works`, 데스크톱) 썸네일 로딩이 느리다는 요청 → 원인 분석 후 개선: 그리드가 `meta.json`의 `cover` 원본(평균 5.2MB, 최대 70MB/9050×6000px)을 그대로 Next Image Optimizer에 흘려보내고 있었음. `scripts/generate-thumbnails.mjs`(macOS `sips` 사용, 새 npm 의존성 없음) 작성해서 각 작업 커버를 짧은 변 720px(데스크톱 그리드 카드 짧은 변 284px의 2.5배, 사용자가 배율 확정) 기준으로 리사이즈해 `content/works/<slug>/media/thumb/`에 저장, 27개 작업 전부 1회 생성 완료. `lib/works.ts`에 `workCoverThumbUrl()` 추가(썸네일 있으면 사용, 없으면 원본 fallback), `app/works/page.tsx`가 이걸 쓰도록 교체. 그리드가 실제로 받는 커버 총량 173.2MB → 5.84MB(~30배 감소). Chrome으로 `/works` 데스크탑 폭 확인, 전부 정상 렌더링·화질 이상 없음.
+4. 로컬 dev 서버를 3000 → **3100번 포트로 이전**(`npm run dev -- -p 3100`, 백그라운드 실행 중, 로그 `/tmp/next-dev-3100.log`). 3000번은 종료됨.
+
+**남은 일**: (1) 사용자가 실제 Safari에서 메뉴 정렬 재확인 필요 — 여전히 문제면 스크린샷 요청할 것. (2) `WorksGrid.tsx`의 `FULL_SIZE_THUMBNAIL_SLUGS`(7개 작업, `sizes` prop 생략해서 필요 이상 큰 이미지를 받아옴) — 이제 원본 자체가 작아졌으니 이 예외가 불필요해졌을 가능성 큼, 사용자에게 정리 제안했으나 아직 답 없음. (3) `content/works/*/meta.json`의 `cover`가 바뀌면 `node scripts/generate-thumbnails.mjs`를 다시 돌려야 썸네일이 갱신됨(이미 있는 파일은 건너뜀) — 콘텐츠 추가 워크플로우 문서(`content/works/README.md`)에 아직 반영 안 함.
+
+**하면 안 되는 일**: Chrome 자동화 `resize_window`를 같은 탭에 반복 호출해서 좁혔다 넓혔다 하지 말 것 — 이미 넓어진 창을 다시 좁히는 것도, 좁은 채로 새 탭을 열어 넓히는 것도 잘 안 먹힐 때가 있음. 탭을 닫고 `tabs_context_mcp`로 새로 연 직후 바로 `resize_window` → `navigate` 순서로 하면 안정적으로 먹힘(`window.innerWidth`로 실제 반영됐는지 재확인할 것). `scripts/generate-thumbnails.mjs`는 짧은 변 기준으로만 리사이즈하고 크롭은 안 함(크롭은 `object-cover`에 위임) — 정확한 W×H로 크롭하는 방식으로 바꾸지 말 것, `object-cover`가 자르는 영역과 어긋날 수 있음.
+
+**검증 방법**: `git log --oneline -3`에 `1a819ae`가 최신, `git status` clean, `origin/main`과 동기화 확인. `http://localhost:3100/works`에서 데스크톱 폭(1440px 이상)으로 그리드 썸네일이 선명하게 뜨는지, 네트워크 탭에서 각 썸네일 요청이 수백 KB대인지(원본 MB대가 아닌지) 확인. 데스크톱 메뉴(`/` → 우측 상단 햄버거)에서 하단 태그 줄이 "ALWAYS, REFINE, STILL"·카피라이트와 같은 우측 라인에 맞는지 Chrome에서 먼저 확인 후, 실제 Safari에서도 확인.
+
+**참고**: 커밋 `1871b39`(메뉴 정렬+About/상세 폰트 최종본), `1a819ae`(썸네일 최적화). `lib/works.ts`의 `workCoverThumbUrl`/`toThumbRelPath`, `scripts/generate-thumbnails.mjs`(`TARGET_MIN_SIDE = 720`), `WorksGrid.tsx`의 `FULL_SIZE_THUMBNAIL_SLUGS`. dev 서버는 현재 3100번 포트에서 실행 중(3000 아님).
+
 ## 2026-09-02 10:00 — About/상세 모바일 타이포·간격 대규모 조정, 메뉴 정렬 버그 수정(미커밋)
 
 **지금 상태**: 이전 세션(2026-08-31, 커밋 `8314a77`~`912bd7d`)에서 시작한 모바일 전용 폴리시 작업을 이어서 진행. 이번 세션에서 한 일:

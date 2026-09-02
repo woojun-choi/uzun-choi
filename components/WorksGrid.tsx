@@ -46,7 +46,7 @@ export default function WorksGrid({
     active === "ALL" ? works : works.filter((w) => w.category.includes(active));
 
   return (
-    <main className="relative flex min-h-screen flex-col bg-[#0c0c0c] pt-[28.20513vw] text-white md:pt-[8.85417vw]">
+    <main className="relative flex min-h-screen flex-col bg-[#0c0c0c] pt-[20.51282vw] text-white md:pt-[8.85417vw]">
       {/* Mobile: full-viewport-width tag pager, swipe to bring the next tag into
           view and tap to select (Figma "M 3. Works" — each label is its own
           screen-width slide, not a compact chip). Positioned absolutely at its
@@ -57,7 +57,7 @@ export default function WorksGrid({
           grid's left edge. */}
       <div
         ref={tagRailRef}
-        className="absolute inset-x-0 top-[25.641vw] h-[16.6667vw] touch-pan-y overflow-hidden text-[10.7692vw] font-black opacity-90 md:hidden"
+        className="absolute inset-x-0 top-[21.79487vw] h-[16.6667vw] touch-pan-y overflow-hidden text-[10.7692vw] font-black opacity-90 md:hidden"
       >
         <div
           className="flex ease-[cubic-bezier(0.65,0,0.35,1)] transition-transform duration-300"
@@ -68,7 +68,7 @@ export default function WorksGrid({
               key={tag.value}
               type="button"
               onClick={() => setActive(tag.value)}
-              className={`w-screen shrink-0 pl-[6.92308vw] text-left transition-opacity ${
+              className={`w-screen shrink-0 pl-[6.41026vw] text-left transition-opacity ${
                 active === tag.value ? "opacity-100" : "opacity-30"
               }`}
             >
@@ -78,7 +78,7 @@ export default function WorksGrid({
         </div>
       </div>
 
-      <div className="mt-[14.1026vw] flex w-full flex-col px-[6.92308vw] pb-[6.92308vw] md:mt-0 md:ml-[4.42708vw] md:w-[94.01042vw] md:flex-row md:px-0 md:pb-[3.125vw]">
+      <div className="mt-[17.94872vw] flex w-full flex-col px-[6.41026vw] pb-[6.92308vw] md:mt-0 md:ml-[4.42708vw] md:w-[94.01042vw] md:flex-row md:px-0 md:pb-[3.125vw]">
         <nav className="hidden md:sticky md:top-[8.85417vw] md:z-10 md:mr-[-2.447917vw] md:flex md:h-fit md:w-[19.27083vw] md:shrink-0 md:flex-col md:gap-[1.04167vw] md:text-[5.20833vw] md:leading-none md:font-black">
           {TAGS.map((tag) => (
             <button
@@ -94,7 +94,7 @@ export default function WorksGrid({
           ))}
         </nav>
 
-        <div className="grid grid-cols-2 gap-[2.21362vw] content-start md:flex-1 md:grid-cols-5 md:gap-[0.78125vw]">
+        <div className="grid grid-cols-2 gap-[1.92308vw] content-start md:flex-1 md:grid-cols-5 md:gap-[0.78125vw]">
           {filtered.map((work) => (
             <Link
               key={work.slug}

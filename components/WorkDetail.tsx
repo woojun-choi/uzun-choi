@@ -169,7 +169,7 @@ export default function WorkDetail({
   };
 
   return (
-    <main className="bg-[#0c0c0c] pt-[28.20513vw] text-white md:pt-[7.291667vw]">
+    <main className="bg-[#0c0c0c] pt-[20.51282vw] text-white md:pt-[7.291667vw]">
       {/* Carousel — fixed-size box (1520x855.66 @1920 baseline; 342x520 @390
           mobile). Landscape images object-cover (crop, fills box, per Figma).
           Portrait images object-contain (fit to box height, no crop,
@@ -321,7 +321,7 @@ export default function WorkDetail({
       {lightbox !== null && total > 0 && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95">
           {/* Same vertical band + right padding as Header, so this X lines up exactly with the header's X */}
-          <div className="absolute top-0 right-0 z-10 flex h-[28.20513vw] items-center pr-[7.69231vw] md:h-[8.85417vw] md:pr-[4.42708vw]">
+          <div className="absolute top-0 right-0 z-10 flex h-[20.51282vw] items-center pr-[6.41026vw] md:h-[8.85417vw] md:pr-[4.42708vw]">
             <button type="button" onClick={closeLightbox} aria-label="닫기">
               <Image
                 src="/assets/icons/close-x.svg"
