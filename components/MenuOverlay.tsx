@@ -52,7 +52,7 @@ export default function MenuOverlay({
         <div className="flex shrink-0 flex-col items-end px-[8.97436vw] opacity-80 md:opacity-100 md:gap-[3.64583vw] md:px-[4.42708vw] md:pb-[4.01042vw]">
           <div className="flex w-[61.46853vw] flex-col items-end gap-[2.52608vw] md:w-[15.20833vw] md:gap-[0.833333vw]">
             <div className="flex w-full flex-col items-end gap-[0.30519vw] md:gap-[0.520833vw]">
-              <div className="flex items-center gap-[1.0526vw] md:gap-[0.520833vw]">
+              <div className="flex w-full items-center justify-end gap-[1.0526vw] md:gap-[0.520833vw]">
                 <a
                   href="https://www.instagram.com/uzunchoi/"
                   target="_blank"
@@ -72,7 +72,7 @@ export default function MenuOverlay({
                   Always, refine, still
                 </p>
               </div>
-              <div className="flex shrink-0 items-center gap-[1.22077vw] px-[0.84203vw] md:gap-[0.625vw] md:px-[0.20833vw]">
+              <div className="flex w-full items-center justify-end gap-[1.22077vw] md:gap-[0.625vw]">
                 {WORK_TAGS.map((tag, i) => (
                   <span key={tag} className="flex shrink-0 items-center gap-[1.22077vw] md:gap-[0.625vw]">
                     {i > 0 && (
