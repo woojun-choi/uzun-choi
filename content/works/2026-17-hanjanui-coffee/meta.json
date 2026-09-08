@@ -1,0 +1,14 @@
+{
+  "slug": "2026-17-hanjanui-coffee",
+  "title": {
+    "ko": "한잔의 커피",
+    "en": "한잔의 커피"
+  },
+  "year": 2026,
+  "category": [
+    "film"
+  ],
+  "cover": "media/07_pour-cup.jpg",
+  "order": 1,
+  "videoUrl": "https://youtu.be/8GvLZWUlE_I"
+}
