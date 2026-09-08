@@ -106,6 +106,16 @@ export default function WorkDetail({
   const resolveMedia = (files: string[]) =>
     files.map((f) => `/works-media/${work.slug}/${f}`);
 
+  // Detail pages render images at fluid, near-full-viewport widths — the
+  // hero box and stacked gallery don't need the full-resolution original
+  // (some run 40-70MB). Route pre-generated media/detail/<file> copies
+  // through the same URL shape; app/works-media/[...path]/route.ts falls
+  // back to the original if a given file's detail copy doesn't exist.
+  const toDisplayUrl = (url: string) => {
+    const idx = url.lastIndexOf("/");
+    return `${url.slice(0, idx)}/detail${url.slice(idx)}`;
+  };
+
   const heroMedia = work.heroMedia?.length ? resolveMedia(work.heroMedia) : media;
   const heroTotal = heroMedia.length;
   const heroArrowsDisabled = heroTotal <= 1;
@@ -181,7 +191,7 @@ export default function WorkDetail({
         {heroTotal > 0 && (
           // eslint-disable-next-line @next/next/no-img-element -- fixed box, orientation-aware fit
           <img
-            src={heroMedia[heroIndex]}
+            src={toDisplayUrl(heroMedia[heroIndex])}
             alt={work.title.ko}
             onClick={() => openLightbox(media.indexOf(heroMedia[heroIndex]))}
             onLoad={(e) => {
@@ -290,7 +300,7 @@ export default function WorkDetail({
                   onClick={() => openLightbox(i)}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element -- full natural height, no crop */}
-                  <img src={src} alt="" className="block w-full" />
+                  <img src={toDisplayUrl(src)} alt="" className="block w-full" loading="lazy" />
                 </div>
               );
             })}
@@ -375,7 +385,7 @@ export default function WorkDetail({
             <div className="flex h-[80vh] w-[80vw] items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element -- fit without cropping */}
               <img
-                src={media[lightbox]}
+                src={toDisplayUrl(media[lightbox])}
                 alt=""
                 onClick={() => setIsZoomed(true)}
                 className="max-h-full max-w-full cursor-zoom-in object-contain"

@@ -17,9 +17,24 @@ export async function GET(
   { params }: { params: Promise<{ path: string[] }> }
 ) {
   const { path: segments } = await params;
-  const filePath = path.join(WORKS_DIR, ...segments);
+  let filePath = path.join(WORKS_DIR, ...segments);
 
-  if (!filePath.startsWith(WORKS_DIR) || !fs.existsSync(filePath)) {
+  if (!filePath.startsWith(WORKS_DIR)) {
+    return new Response("Not found", { status: 404 });
+  }
+
+  // media/detail/<file> is a pre-generated downsized copy for detail-page
+  // display; not every original gets one (small sources are skipped), so
+  // fall back to the original at the same position when it's missing.
+  if (!fs.existsSync(filePath)) {
+    const detailIdx = segments.lastIndexOf("detail");
+    if (detailIdx !== -1) {
+      const fallback = [...segments.slice(0, detailIdx), ...segments.slice(detailIdx + 1)];
+      filePath = path.join(WORKS_DIR, ...fallback);
+    }
+  }
+
+  if (!fs.existsSync(filePath)) {
     return new Response("Not found", { status: 404 });
   }
 
