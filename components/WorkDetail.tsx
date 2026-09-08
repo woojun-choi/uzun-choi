@@ -120,6 +120,18 @@ export default function WorkDetail({
   const heroTotal = heroMedia.length;
   const heroArrowsDisabled = heroTotal <= 1;
 
+  // Warm the browser cache for the adjacent hero slides so pressing the
+  // ScrollNav up/down button feels instant instead of waiting on a fresh
+  // fetch — especially noticeable on slow connections.
+  useEffect(() => {
+    if (heroTotal <= 1) return;
+    const next = new window.Image();
+    next.src = toDisplayUrl(heroMedia[(heroIndex + 1) % heroTotal]);
+    const prev = new window.Image();
+    prev.src = toDisplayUrl(heroMedia[(heroIndex - 1 + heroTotal) % heroTotal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [heroIndex, heroTotal, work.slug]);
+
   const stackedPinned = work.stackedPinned?.length ? resolveMedia(work.stackedPinned) : [];
   const stackedPool = work.stackedRandomPool?.length ? resolveMedia(work.stackedRandomPool) : [];
   const stackedRandomCount = work.stackedRandomCount ?? stackedPool.length;
@@ -156,6 +168,16 @@ export default function WorkDetail({
     setLightbox(null);
     setIsZoomed(false);
   };
+
+  // Same idea as the hero preload above, for the lightbox's prev/next arrows.
+  useEffect(() => {
+    if (lightbox === null || total <= 1) return;
+    const next = new window.Image();
+    next.src = toDisplayUrl(media[(lightbox + 1) % total]);
+    const prev = new window.Image();
+    prev.src = toDisplayUrl(media[(lightbox - 1 + total) % total]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightbox, total]);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
