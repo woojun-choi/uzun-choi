@@ -309,8 +309,10 @@ export default function WorkDetail({
         {/* Stacked detail images — only when the work has more than 8 images.
             Uses work.stackedMedia if set (explicit curation), otherwise falls
             back to a slug-seeded shuffle capped at STACKED_LIMIT so the same
-            subset (in original order) shows on every load. */}
-        {showStacked && (
+            subset (in original order) shows on every load. Section itself
+            (and the video embed inside it) still renders on videoUrl alone,
+            for works with a video but a small media folder. */}
+        {(showStacked || work.videoUrl) && (
           <div className="flex flex-col gap-[6.25vw]">
             <Divider />
             {stackedMedia.map((src) => {
