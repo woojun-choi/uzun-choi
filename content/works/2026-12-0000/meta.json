@@ -11,10 +11,12 @@
   "cover": "media/12_5.jpg",
   "order": 6,
   "credit": [
-    { "role": "Directed by", "name": "UZUN" },
-    { "role": "Screenplay by", "name": "UZUN" },
-    { "role": "Filmed by", "name": "UZUN" },
-    { "role": "VFX by", "name": "UZUN" },
+    { "role": "Directed by", "name": "UZUN, 옥지민" },
+    { "role": "Screenplay by", "name": "UZUN, 옥지민" },
+    { "role": "Filmed by", "name": "UZUN, 용혜원" },
+    { "role": "VFX by", "name": "UZUN, 이승연, 김동현" },
+    { "role": "Edited by", "name": "용혜원" },
+    { "role": "Color Grading by", "name": "김동현" },
     { "role": "Special Thanks to", "name": "Team 0000, Kihoon, Siz" }
   ],
   "stackedRandomPool": [
