@@ -10,5 +10,10 @@
   ],
   "cover": "media/01_1.png",
   "order": 23,
-  "videoUrl": "https://youtu.be/G4FIgGGjJy4"
+  "videoUrl": "https://youtu.be/G4FIgGGjJy4",
+  "credit": [
+    { "role": "Directed by", "name": "UZUN" },
+    { "role": "Cast", "name": "김민재, 오동욱, 강선우, 정우성" },
+    { "role": "Team Footage Film", "name": "옥지민, 오동욱, 김민재, 정우성, 임태빈" }
+  ]
 }
