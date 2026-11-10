@@ -1,5 +1,22 @@
 # uzun-choi 인수인계 로그
 
+## 2026-11-10 23:45 — 초미니게임천국 게임 3개(ㄱㅅ·천지인·반갈죽) Works 추가, Play/App Store 링크 필드 신설, 커밋·푸시 완료
+
+**지금 상태**: `e896a4b`(코드), `7d54788`(콘텐츠) 푸시 완료, `git status` clean. Works 맨 앞이 ㄱㅅ(`2026-20-chosung`, order 1) → 천지인(`2026-19-cheonjiin`, 2) → 반갈죽(`2026-18-bangaljuk`, 3), 기존 28개 order는 +3. 카테고리 `dev`, credit 없음(전부 본인 작업).
+- 그리드 커버(`media/00_cover.jpg`, 1200×1930 = 카드 비율 284.4:457.5)는 실제 배포 게임 페이지를 Playwright로 띄워 버튼·문구를 CSS로 숨기고 `body{filter:invert(1)}`로 다크(`#161616`) 처리해 렌더링한 것. 나머지 미디어는 배포 사이트 실제 플레이 캡처(데스크톱 1440×900@2x, 모바일 390×844@3x), 천지인만 App Store 스크린샷 7장(`~/dev/tiny-game-collection/private/app-store/screenshots/store/`)으로 교체.
+- 신규 meta 필드 `siteUrl`/`appStoreUrl` → 상세 Description 아래 "Play"/"App Store" 줄로 렌더(`WorkDetail.tsx`, `lib/works.ts`). 천지인은 App Store 출시됨(2026-11-09, `https://apps.apple.com/kr/app/id6832460756`), ㄱㅅ는 미출시라 설명에 "iOS 앱 출시도 준비 중"으로 씀.
+
+**남은 일**:
+1. 배포 후 실서버에서 Works 순서·커버·Play/App Store 링크 확인(Vercel 자동 배포 가정, 이번 세션에서 실서버 확인은 안 함).
+2. (사용자 결정 대기) ㄱㅅ·반갈죽 상세 히어로 첫 이미지가 밝은 배경이라 흰 제목("ㄱㅅ 2026")이 묻힘 — 히어로를 다크 화면으로 바꾸거나 제목 그림자 강화 제안만 해둠, 미반영.
+3. ㄱㅅ iOS 앱이 출시되면 `2026-20-chosung/meta.json`에 `appStoreUrl` 추가 + 설명의 "준비 중" 문구 수정. ㄱㅅ 커버의 "No.02 — 초성 게임" 문구는 맨 앞 배치와 번호가 어긋난다고 언급만 함.
+
+**하면 안 되는 일**: 커버/썸네일 이미지를 같은 파일명으로 교체하면 dev 서버에서 Next 이미지 캐시 때문에 옛 이미지가 계속 보임 → `.next/dev/cache/images` 지우고 확인할 것(파일 문제로 착각하지 말 것). 세로·가로 섞인 작업에서 첫 히어로 이미지가 하이드레이션 전에 로드되면 `onLoad` 세로 판별이 안 돌아 세로 이미지가 잘림 → 천지인은 `heroPortrait: true`, ㄱㅅ·반갈죽은 `heroMedia`로 커버를 빼고 가로 데스크톱 컷부터 시작하게 함(`heroMedia` 경로는 `media/` 접두사 필수). 반갈죽 캡처 자동화 시 마우스 드래그를 너무 빠르게(대기 없이) 하면 컷이 인식 안 됨 — 16ms 간격으로 천천히 움직여야 함.
+
+**검증 방법**: `git log --oneline -3`에 `7d54788`이 최신. `npm run dev -- -p 3100` 후 `/works` 맨 앞 다크 커버 3장 순서, `/works/2026-19-cheonjiin` 하단 Play·App Store 두 줄과 세로 히어로(잘림 없음) 확인. `npx tsc --noEmit` 통과. `npm run lint`의 `WorkDetail.tsx:142` set-state-in-effect 오류 1개는 이번 변경 이전부터 있던 것.
+
+**참고**: 커버·캡처 스크립트는 세션 scratchpad에만 있었음(저장 안 됨) — 다시 만들 땐 위 방식(라이브 페이지 + 주입 CSS + invert) 재현. 게임 저장소 `~/dev/tiny-game-collection`(README, `prds/`, `private/app-store/store-listing.md`·`PRD.md`는 비공개, 커밋 금지). 새 작업 추가 시 `node scripts/generate-thumbnails.mjs` + `node scripts/generate-detail-images.mjs` 둘 다 실행.
+
 ## 2026-09-08 16:07 — "한잔의 커피" Works 항목 신규 추가, 영상 임베드 조건 버그 수정, 커밋·푸시 완료
 
 **지금 상태**: 15:22 항목 이후 이어서 진행, 4개 커밋 완료·푸시(`c880992`, `40b3f19`, `003b90a`, `547c6a7`).
