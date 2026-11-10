@@ -1,0 +1,3 @@
+A survival typing game. You're given a pair of Korean initial consonants (ㄱㅅ, ㅇㅂ …) and keep typing real words that match before the timer runs out. A correct word adds 3 seconds, a word that isn't in the dictionary costs one, and the clock keeps speeding up. When it's over, the game shows the words you missed — the "oh, that one too!" moment that makes you play again.
+
+The second title in Tiny Game Heaven. Dictionary data from the National Institute of Korean Language is processed at build time and shipped as static files, and the game handles problems unique to Korean typing, like input arriving mid-composition in the Hangul IME. An iOS app is on the way.

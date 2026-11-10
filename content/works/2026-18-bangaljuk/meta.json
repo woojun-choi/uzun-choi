@@ -1,0 +1,15 @@
+{
+  "slug": "2026-18-bangaljuk",
+  "title": {
+    "ko": "반갈죽",
+    "en": "Bangaljuk"
+  },
+  "year": 2026,
+  "category": [
+    "dev"
+  ],
+  "cover": "media/00_cover.jpg",
+  "order": 3,
+  "siteUrl": "https://bangaljuk.uzun-choi.com",
+  "heroMedia": ["media/01_bangaljuk-desk-start.jpg", "media/02_bangaljuk-desk-cut.jpg", "media/03_bangaljuk-desk-result.jpg", "media/04_bangaljuk-mob-start.jpg", "media/05_bangaljuk-mob-cut.jpg"]
+}
