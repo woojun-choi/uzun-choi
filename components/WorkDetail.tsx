@@ -306,6 +306,29 @@ export default function WorkDetail({
           </div>
         )}
 
+        {/* Links — live site / App Store for dev works (meta.siteUrl, meta.appStoreUrl) */}
+        {[
+          work.siteUrl && { label: "Play", href: work.siteUrl, text: work.siteUrl.replace(/^https?:\/\//, "") },
+          work.appStoreUrl && { label: "App Store", href: work.appStoreUrl, text: "Download on the App Store" },
+        ]
+          .filter((l): l is { label: string; href: string; text: string } => Boolean(l))
+          .map((l) => (
+            <div key={l.label} className="flex flex-col gap-[5.12821vw] md:gap-[2.604167vw]">
+              <Divider />
+              <div className="flex items-center justify-between px-[1.02564vw] md:px-0 md:pl-[0.520833vw]">
+                <p className="text-[4.87179vw] font-bold whitespace-nowrap md:text-[1.25vw]">{l.label}</p>
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[4.10256vw] font-medium text-white/80 underline underline-offset-4 hover:text-white md:pr-[0.78125vw] md:text-[1.25vw] md:font-[550]"
+                >
+                  {l.text} ↗
+                </a>
+              </div>
+            </div>
+          ))}
+
         {/* Stacked detail images — only when the work has more than 8 images.
             Uses work.stackedMedia if set (explicit curation), otherwise falls
             back to a slug-seeded shuffle capped at STACKED_LIMIT so the same

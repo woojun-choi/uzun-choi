@@ -17,6 +17,8 @@ export type WorkMeta = {
   order: number;
   credit?: WorkCredit[];
   videoUrl?: string;
+  siteUrl?: string;
+  appStoreUrl?: string;
   featured?: boolean;
   featuredMobile?: boolean;
   mobileOrder?: number;
