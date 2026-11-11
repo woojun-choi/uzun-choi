@@ -10,6 +10,7 @@
   ],
   "cover": "media/00_cover.jpg",
   "order": 3,
+  "heroPortrait": true,
   "siteUrl": "https://bangaljuk.uzun-choi.com",
   "heroMedia": ["media/01_bangaljuk-desk-start.jpg", "media/02_bangaljuk-desk-cut.jpg", "media/03_bangaljuk-desk-result.jpg", "media/04_bangaljuk-mob-start.jpg", "media/05_bangaljuk-mob-cut.jpg"]
 }

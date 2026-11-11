@@ -10,6 +10,7 @@
   ],
   "cover": "media/00_cover.jpg",
   "order": 1,
+  "heroPortrait": true,
   "siteUrl": "https://chosung.uzun-choi.com",
   "heroMedia": ["media/01_chosung-desk-start.jpg", "media/02_chosung-desk-play.jpg", "media/03_chosung-desk-result.jpg", "media/04_chosung-mob-play.jpg", "media/05_chosung-mob-result.jpg"]
 }
